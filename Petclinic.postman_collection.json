@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "88dc5d01-ab5b-4287-82aa-4d9390e26b3e",
+		"_postman_id": "59bb930f-f44b-4918-b9da-b38295769bd9",
 		"name": "Petclinic",
 		"description": "This is REST API documentation of the Spring Petclinic backend. If authentication is enabled, when calling the APIs use admin/admin\n\nContact Support:\n Name: Bryan Dollery\n Email: bryan.dollery@gmail.com",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -10,12 +10,169 @@
 			"name": "Test Owners",
 			"item": [
 				{
-					"name": "Confirm owner quantity",
+					"name": "Successfully  retrieve all owners",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
-								"id": "8037db5c-2d53-41ee-9729-ae1f669e08e2",
+								"id": "c5fff5e6-befc-417f-a1f1-aa34527173cc",
+								"exec": [
+									"pm.test(\"Successfully retrieve all pets\", function () {",
+									"    pm.response.to.have.status(200); ",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n  {\n    \"address\": \"string\",\n    \"city\": \"string\",\n    \"firstName\": \"string\",\n    \"id\": 0,\n    \"lastName\": \"string\",\n    \"pets\": [\n      {\n        \"birthDate\": \"2020-05-13T01:28:54.328Z\",\n        \"id\": 0,\n        \"name\": \"string\",\n        \"type\": {\n          \"id\": 0,\n          \"name\": \"string\"\n        },\n        \"visits\": [\n          {\n            \"date\": \"yyyy/MM/dd\",\n            \"description\": \"string\",\n            \"id\": 0\n          }\n        ]\n      }\n    ],\n    \"telephone\": \"string\"\n  }\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/owners",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"owners"
+							]
+						},
+						"description": "Given I am on retrieve all owners request\nWhen I want to retrieve list of owners\nThen I will have a list of all the owners details"
+					},
+					"response": [
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/pets",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"pets"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "*/*"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/pets",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"pets"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Unauthorized",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/pets",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"pets"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Forbidden",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/pets",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"pets"
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Confirm owners quantity",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c918d9fc-0770-46df-9a9c-0820758af6f6",
 								"exec": [
 									"pm.test(\"Expect \" + environment.totalOwners + \" owners\", function () {",
 									"    var json = pm.response.json();",
@@ -55,7 +212,7 @@
 								"owners"
 							]
 						},
-						"description": "Given that there are x owners\nWhen I get the full owner list\nThen I expect that list to have x owners in it"
+						"description": "Given that there are x owners\nAnd I am on the confirm owners quantity request\nWhen I want to get the full owner list\nThen I expect that list to have x owners in it"
 					},
 					"response": [
 						{
@@ -80,33 +237,6 @@
 								{
 									"key": "Content-Type",
 									"value": "*/*"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						},
-						{
-							"name": "Forbidden",
-							"originalRequest": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/owners",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"owners"
-									]
-								}
-							},
-							"status": "Forbidden",
-							"code": 403,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "text/plain"
 								}
 							],
 							"cookie": [],
@@ -165,6 +295,233 @@
 							],
 							"cookie": [],
 							"body": ""
+						},
+						{
+							"name": "Forbidden",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/owners",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"owners"
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Can retrieve owner by lastName",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3e0b13be-8155-4df6-965f-3657fc6aaffc",
+								"exec": [
+									"pm.test(\"Can retrieve owner by lastName\", function () {",
+									"    pm.response.json().forEach(owner => {",
+									"        pm.expect(owner.lastName).to.eql(\"Two\");",
+									"    });",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/pet/*/lastname/:lastName",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"pet",
+								"*",
+								"lastname",
+								":lastName"
+							],
+							"variable": [
+								{
+									"description": "(Required) lastName",
+									"key": "lastName",
+									"value": "Two"
+								}
+							]
+						},
+						"description": "Given that there is list of owners\nAnd I am on the retrieve owner by last name request\nWhen I give a specific owner's last name\nThen I expect to retrieve all the owner's other details "
+					},
+					"response": [
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/owners/*/lastname/:lastName",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"owners",
+										"*",
+										"lastname",
+										":lastName"
+									],
+									"variable": [
+										{
+											"key": "lastName"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "*/*"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Forbidden",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/owners/*/lastname/:lastName",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"owners",
+										"*",
+										"lastname",
+										":lastName"
+									],
+									"variable": [
+										{
+											"key": "lastName"
+										}
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Unauthorized",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/owners/*/lastname/:lastName",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"owners",
+										"*",
+										"lastname",
+										":lastName"
+									],
+									"variable": [
+										{
+											"key": "lastName"
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/owners/*/lastname/:lastName",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"owners",
+										"*",
+										"lastname",
+										":lastName"
+									],
+									"variable": [
+										{
+											"key": "lastName"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
 						}
 					]
 				},
@@ -174,7 +531,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d56f7355-56ca-44be-903b-840398547b51",
+								"id": "9bf70368-78b0-44df-be26-aa42c9ccf561",
 								"exec": [
 									"pm.test(\"Successfully add owner\", function () {",
 									"    pm.response.to.have.status(201); // created",
@@ -201,7 +558,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"firstName\":\"One\",\n\t\"lastName\": \"Two\",\n\t\"address\":\"BestTeam\",\n\t\"telephone\":\"234234\",\n\t\"city\":\"SITE\"\n}",
+							"raw": "{\n\t\"firstName\":\"Parisha\",\n\t\"lastName\": \"K\",\n\t\"address\":\"KnowledgHut\",\n\t\"telephone\":\"34567\",\n\t\"city\":\"Zoom\"\n}",
 							"options": {
 								"raw": {}
 							}
@@ -214,36 +571,10 @@
 							"path": [
 								"owners"
 							]
-						}
+						},
+						"description": "Given that I am on the add owner request\nWhen I want to add an owner\nThen I expect the owner to be added to the owners list"
 					},
 					"response": [
-						{
-							"name": "Forbidden",
-							"originalRequest": {
-								"method": "POST",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/owners",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"owners"
-									]
-								}
-							},
-							"status": "Forbidden",
-							"code": 403,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "text/plain"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						},
 						{
 							"name": "Unauthorized",
 							"originalRequest": {
@@ -266,33 +597,6 @@
 								{
 									"key": "Content-Type",
 									"value": "text/plain"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						},
-						{
-							"name": "OK",
-							"originalRequest": {
-								"method": "POST",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/owners",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"owners"
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "*/*"
 								}
 							],
 							"cookie": [],
@@ -326,6 +630,33 @@
 							"body": ""
 						},
 						{
+							"name": "Forbidden",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/owners",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"owners"
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
 							"name": "Not Found",
 							"originalRequest": {
 								"method": "POST",
@@ -351,6 +682,33 @@
 							],
 							"cookie": [],
 							"body": ""
+						},
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/owners",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"owners"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "*/*"
+								}
+							],
+							"cookie": [],
+							"body": ""
 						}
 					]
 				},
@@ -360,7 +718,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "7c03d4d5-8cf4-44ed-b1d3-a3d7774c5730",
+								"id": "84f8888d-7f6b-4f63-81cc-b126ab75beb1",
 								"exec": [
 									"pm.test(\"Fail to add owner\", function () {",
 									"    pm.response.to.have.status(400); // malformed request syntax",
@@ -398,90 +756,10 @@
 							"path": [
 								"owners"
 							]
-						}
+						},
+						"description": "Given I am on the fail to add owner request\nWhen I want to add an owner with no data\nThen The owner will not be added to the owners list"
 					},
 					"response": [
-						{
-							"name": "Unauthorized",
-							"originalRequest": {
-								"method": "POST",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/owners",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"owners"
-									]
-								}
-							},
-							"status": "Unauthorized",
-							"code": 401,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "text/plain"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						},
-						{
-							"name": "Not Found",
-							"originalRequest": {
-								"method": "POST",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/owners",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"owners"
-									]
-								}
-							},
-							"status": "Not Found",
-							"code": 404,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "text/plain"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						},
-						{
-							"name": "Forbidden",
-							"originalRequest": {
-								"method": "POST",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/owners",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"owners"
-									]
-								}
-							},
-							"status": "Forbidden",
-							"code": 403,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "text/plain"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						},
 						{
 							"name": "Created",
 							"originalRequest": {
@@ -535,146 +813,19 @@
 							],
 							"cookie": [],
 							"body": ""
-						}
-					]
-				},
-				{
-					"name": "Can retrieve by lastName",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "82192e79-6ec0-4526-bf58-168ab9e7a48e",
-								"exec": [
-									"pm.test(\"Can retrieve by lastName\", function () {",
-									"    pm.response.json().forEach(owner => {",
-									"        pm.expect(owner.lastName).to.eql(\"Gupta\");",
-									"    });",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/owners/*/lastname/:lastName",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"owners",
-								"*",
-								"lastname",
-								":lastName"
-							],
-							"variable": [
-								{
-									"id": "3b44954a-e9ac-4db6-9758-3fa6e1c7a330",
-									"key": "lastName",
-									"value": "Gupta",
-									"type": "string",
-									"description": "(Required) lastName"
-								}
-							]
-						}
-					},
-					"response": [
-						{
-							"name": "OK",
-							"originalRequest": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/owners/*/lastname/:lastName",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"owners",
-										"*",
-										"lastname",
-										":lastName"
-									],
-									"variable": [
-										{
-											"key": "lastName"
-										}
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "*/*"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						},
-						{
-							"name": "Not Found",
-							"originalRequest": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/owners/*/lastname/:lastName",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"owners",
-										"*",
-										"lastname",
-										":lastName"
-									],
-									"variable": [
-										{
-											"key": "lastName"
-										}
-									]
-								}
-							},
-							"status": "Not Found",
-							"code": 404,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "text/plain"
-								}
-							],
-							"cookie": [],
-							"body": ""
 						},
 						{
 							"name": "Unauthorized",
 							"originalRequest": {
-								"method": "GET",
+								"method": "POST",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/owners/*/lastname/:lastName",
+									"raw": "{{baseUrl}}/owners",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
-										"owners",
-										"*",
-										"lastname",
-										":lastName"
-									],
-									"variable": [
-										{
-											"key": "lastName"
-										}
+										"owners"
 									]
 								}
 							},
@@ -691,25 +842,44 @@
 							"body": ""
 						},
 						{
-							"name": "Forbidden",
+							"name": "Not Found",
 							"originalRequest": {
-								"method": "GET",
+								"method": "POST",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/owners/*/lastname/:lastName",
+									"raw": "{{baseUrl}}/owners",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
-										"owners",
-										"*",
-										"lastname",
-										":lastName"
+										"owners"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Forbidden",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/owners",
+									"host": [
+										"{{baseUrl}}"
 									],
-									"variable": [
-										{
-											"key": "lastName"
-										}
+									"path": [
+										"owners"
 									]
 								}
 							},
@@ -728,12 +898,12 @@
 					]
 				},
 				{
-					"name": "Update owner's name",
+					"name": "Successfully update owner",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
-								"id": "ffe992e7-42ef-46ea-8b7f-6ba6a7c9a652",
+								"id": "94d6300b-c164-4a13-9f87-03382dc6e421",
 								"exec": [
 									"pm.test(\"Update owner's name\", function () {",
 									"    pm.response.to.have.status(204); // No content",
@@ -771,7 +941,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"firstName\": \"Parisha\",\n    \"lastName\": \"Gupta\",\n    \"address\": \"KnowledgHut\",\n    \"city\": \"Zoom\",\n    \"telephone\": \"1111\"\n}",
+							"raw": "{\n    \"firstName\": \"Parisha\",\n    \"lastName\": \"Gupta\",\n\t\"address\":\"KnowledgHut\",\n\t\"telephone\":\"1111\",\n\t\"city\":\"Zoom\"\n}",
 							"options": {
 								"raw": {}
 							}
@@ -787,14 +957,13 @@
 							],
 							"variable": [
 								{
-									"id": "cd6be620-9056-49bb-9d60-4ce162a9650b",
 									"key": "ownerId",
 									"value": "{{mostRecentlyAddedId}}",
-									"type": "string",
 									"description": "(Required) ownerId"
 								}
 							]
-						}
+						},
+						"description": "Given I am on the update owner request\nWhen I want to update the last added owner's details\nThen The owner will be updated on the owners list"
 					},
 					"response": [
 						{
@@ -820,72 +989,6 @@
 							},
 							"status": "Unauthorized",
 							"code": 401,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "text/plain"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						},
-						{
-							"name": "OK",
-							"originalRequest": {
-								"method": "PUT",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/owners/:ownerId",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"owners",
-										":ownerId"
-									],
-									"variable": [
-										{
-											"key": "ownerId"
-										}
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "*/*"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						},
-						{
-							"name": "Forbidden",
-							"originalRequest": {
-								"method": "PUT",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/owners/:ownerId",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"owners",
-										":ownerId"
-									],
-									"variable": [
-										{
-											"key": "ownerId"
-										}
-									]
-								}
-							},
-							"status": "Forbidden",
-							"code": 403,
 							"_postman_previewlanguage": "text",
 							"header": [
 								{
@@ -930,6 +1033,39 @@
 							"body": ""
 						},
 						{
+							"name": "Forbidden",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/owners/:ownerId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"owners",
+										":ownerId"
+									],
+									"variable": [
+										{
+											"key": "ownerId"
+										}
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
 							"name": "Not Found",
 							"originalRequest": {
 								"method": "PUT",
@@ -961,6 +1097,39 @@
 							],
 							"cookie": [],
 							"body": ""
+						},
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/owners/:ownerId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"owners",
+										":ownerId"
+									],
+									"variable": [
+										{
+											"key": "ownerId"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "*/*"
+								}
+							],
+							"cookie": [],
+							"body": ""
 						}
 					]
 				},
@@ -970,7 +1139,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d9c344d5-f555-43b9-ac29-8a7ebfc0581c",
+								"id": "89b7f450-af52-4074-abab-68fb49ea2a21",
 								"exec": [
 									"pm.test(\"Delete most recent owner\", function () {",
 									"    pm.response.to.have.status(204); // deleted",
@@ -999,13 +1168,12 @@
 							],
 							"variable": [
 								{
-									"id": "ed0ceaf0-422a-409a-8fe9-53396a4774ec",
 									"key": "ownerId",
-									"value": "{{mostRecentlyAddedId}}",
-									"type": "string"
+									"value": "{{mostRecentlyAddedId}}"
 								}
 							]
-						}
+						},
+						"description": "Given I am on the delete most recent owner request\nWhen I want to delete the most recent added owner\nThen The owner will be removed from the owners list"
 					},
 					"response": []
 				},
@@ -1015,7 +1183,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "f1099f53-6c86-45fe-ae1d-3d97593c988b",
+								"id": "af371d0a-4f31-4db9-848f-90448e10b5b1",
 								"exec": [
 									"pm.test(\"Fail to delete non-existant owner\", function () {",
 									"    pm.response.to.have.status(404); // Not found",
@@ -1041,13 +1209,12 @@
 							],
 							"variable": [
 								{
-									"id": "dcfd5937-877b-4478-b2c8-e6ebde6ff91d",
 									"key": "ownerId",
-									"value": "11111111",
-									"type": "string"
+									"value": "11111111"
 								}
 							]
-						}
+						},
+						"description": "Given I am on the fail to delete non-existant owner request\nWhen I want to delete an owner with a non-existant owner ID\nThen I will receive a fail to delete an owner error message"
 					},
 					"response": []
 				}
@@ -1057,7 +1224,7 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "69a60e0a-19d0-4bfd-a234-8c2e02baaef8",
+						"id": "9a2a9c5a-36dd-4e50-9957-33e9544fd13a",
 						"type": "text/javascript",
 						"exec": [
 							"var url = pm.variables.get('baseUrl') + '/owners';",
@@ -1079,7 +1246,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "b8d5d8e4-6822-4d0c-b41d-44c8379f88a6",
+						"id": "c9b62684-8478-44cb-ba5a-6b6e72a9b2d3",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -1093,161 +1260,14 @@
 			"name": "pets",
 			"item": [
 				{
-					"name": "Confirm pets quantity",
+					"name": "Successfully  retrieve all pets",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
-								"id": "c86a8b7a-fe69-4968-9d5b-355c49958d96",
+								"id": "9b66141f-be1a-4df9-a75b-0ddde728d5af",
 								"exec": [
-									"pm.test(\"Expect \" + environment.totalOwners + \" owners\", function () {",
-									"    var json = pm.response.json();",
-									"    pm.expect(json.length).to.eql(parseInt(environment.totalOwners));",
-									"});",
-									"",
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/owners",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"owners"
-							]
-						},
-						"description": "Given that there are x owners\nWhen I get the full owner list\nThen I expect that list to have x owners in it"
-					},
-					"response": [
-						{
-							"name": "Unauthorized",
-							"originalRequest": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/owners",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"owners"
-									]
-								}
-							},
-							"status": "Unauthorized",
-							"code": 401,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "text/plain"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						},
-						{
-							"name": "Forbidden",
-							"originalRequest": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/owners",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"owners"
-									]
-								}
-							},
-							"status": "Forbidden",
-							"code": 403,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "text/plain"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						},
-						{
-							"name": "Not Found",
-							"originalRequest": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/owners",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"owners"
-									]
-								}
-							},
-							"status": "Not Found",
-							"code": 404,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "text/plain"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						},
-						{
-							"name": "OK",
-							"originalRequest": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/owners",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"owners"
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "*/*"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						}
-					]
-				},
-				{
-					"name": "Successfully reterive all pets",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "88c0fc65-a54d-4089-a360-cc8d1b07ba8b",
-								"exec": [
-									"pm.test(\"Successfully reterive all pets\", function () {",
+									"pm.test(\"Successfully retrieve all pets\", function () {",
 									"    pm.response.to.have.status(200); ",
 									"});",
 									""
@@ -1282,11 +1302,12 @@
 							"path": [
 								"pets"
 							]
-						}
+						},
+						"description": "Given I am on retrieve all pets request\nWhen I want to retrieve list of pets\nThen I will have a list of all the pets details"
 					},
 					"response": [
 						{
-							"name": "Unauthorized",
+							"name": "Forbidden",
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
@@ -1300,35 +1321,8 @@
 									]
 								}
 							},
-							"status": "Unauthorized",
-							"code": 401,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "text/plain"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						},
-						{
-							"name": "Not Found",
-							"originalRequest": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/pets",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"pets"
-									]
-								}
-							},
-							"status": "Not Found",
-							"code": 404,
+							"status": "Forbidden",
+							"code": 403,
 							"_postman_previewlanguage": "text",
 							"header": [
 								{
@@ -1367,7 +1361,7 @@
 							"body": ""
 						},
 						{
-							"name": "Forbidden",
+							"name": "Not Found",
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
@@ -1381,8 +1375,35 @@
 									]
 								}
 							},
-							"status": "Forbidden",
-							"code": 403,
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Unauthorized",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/pets",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"pets"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
 							"_postman_previewlanguage": "text",
 							"header": [
 								{
@@ -1396,85 +1417,66 @@
 					]
 				},
 				{
-					"name": "getPet",
+					"name": "Confirm pets quantity",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e1700775-c15a-452f-a015-d8698248fe9b",
+								"exec": [
+									"pm.test(\"Expect \" + environment.totalPets + \" pets\", function () {",
+									"    var json = pm.response.json();",
+									"    pm.expect(json.length).to.eql(parseInt(environment.totalPets));",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"auth": {
 							"type": "noauth"
 						},
 						"method": "GET",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "{{baseUrl}}/pets/:petId",
+							"raw": "{{baseUrl}}/pets",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
-								"pets",
-								":petId"
-							],
-							"variable": [
-								{
-									"id": "d1f8cc5a-6a49-434f-8057-d655a1c41104",
-									"key": "petId",
-									"value": "<integer>",
-									"type": "string",
-									"description": "(Required) petId"
-								}
+								"pets"
 							]
-						}
+						},
+						"description": "Given that there are x pets\nAnd I am on the confirm pets quantity request\nWhen I want to get the full pets list\nThen I expect that list to have x pets in it"
 					},
 					"response": [
-						{
-							"name": "Unauthorized",
-							"originalRequest": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/pets/:petId",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"pets",
-										":petId"
-									],
-									"variable": [
-										{
-											"key": "petId"
-										}
-									]
-								}
-							},
-							"status": "Unauthorized",
-							"code": 401,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "text/plain"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						},
 						{
 							"name": "OK",
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/pets/:petId",
+									"raw": "{{baseUrl}}/owners",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
-										"pets",
-										":petId"
-									],
-									"variable": [
-										{
-											"key": "petId"
-										}
+										"owners"
 									]
 								}
 							},
@@ -1496,18 +1498,12 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/pets/:petId",
+									"raw": "{{baseUrl}}/owners",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
-										"pets",
-										":petId"
-									],
-									"variable": [
-										{
-											"key": "petId"
-										}
+										"owners"
 									]
 								}
 							},
@@ -1529,18 +1525,12 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/pets/:petId",
+									"raw": "{{baseUrl}}/owners",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
-										"pets",
-										":petId"
-									],
-									"variable": [
-										{
-											"key": "petId"
-										}
+										"owners"
 									]
 								}
 							},
@@ -1555,11 +1545,52 @@
 							],
 							"cookie": [],
 							"body": ""
+						},
+						{
+							"name": "Unauthorized",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/owners",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"owners"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
 						}
 					]
 				},
 				{
-					"name": "addPet",
+					"name": "Unsuccessfully add pet",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "63027a2a-c888-4ad3-a61e-3949f0faf30a",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "noauth"
@@ -1573,7 +1604,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"birthDate\": \"2019/06/13\",\n    \"name\": \"Jabberwocky\",\n    \"owner\": {\n        \"id\": \"101\",\n    },\n    \"type\": {\n        \"id\": \"dragon\",\n        \"name\": \"<string>\"\n    },\n    \"visits\": [\n        {\n            \"date\": \"<string>\",\n            \"description\": \"<string>\",\n            \"id\": \"<integer>\",\n            \"pet\": {\n                \"value\": \"<Circular reference to #/components/schemas/Pet detected>\"\n            }\n        },\n        {\n            \"date\": \"<string>\",\n            \"description\": \"<string>\",\n            \"id\": \"<integer>\",\n            \"pet\": {\n                \"value\": \"<Circular reference to #/components/schemas/Pet detected>\"\n            }\n        }\n    ]\n}",
+							"raw": "{\n    \"birthDate\": \"2019/06/13\",\n    \"name\": \"Jabberwocky\"\n    \n}",
 							"options": {
 								"raw": {}
 							}
@@ -1617,6 +1648,60 @@
 							"body": ""
 						},
 						{
+							"name": "Forbidden",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/pets",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"pets"
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Unauthorized",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/pets",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"pets"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
 							"name": "OK",
 							"originalRequest": {
 								"method": "POST",
@@ -1669,19 +1754,95 @@
 							],
 							"cookie": [],
 							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Successfully update pet",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "843501b1-8cec-458c-be47-39a6d9fcb5d9",
+								"exec": [
+									"pm.test(\"Update pet's name\", function () {",
+									"    pm.response.to.have.status(204); // No content",
+									"    var url = pm.variables.get('baseUrl') + '/pets';",
+									"    ",
+									"    pm.sendRequest(url, function (err, res) {",
+									"        if (err) {",
+									"            console.log(err);",
+									"            pm.fail();",
+									"        } else {",
+									"            var json = res.json();",
+									"            var name = json[json.length - 1].name;",
+									"            pm.expect(name).to.eql('snowBall');",
+									"        }",
+									"    });",
+									"    ",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
 						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"id\": 11,\n        \"name\": \"snowBall\",\n        \"birthDate\": \"2000/03/09\",\n        \"type\": {\n            \"id\": 5,\n            \"name\": \"bird\"\n        },\n        \"owner\": {\n            \"id\": 9,\n            \"firstName\": \"wibble\",\n            \"lastName\": \"Dollery\",\n            \"address\": \"wherever\",\n            \"city\": \"Nobody cares\",\n            \"telephone\": \"3132\"\n        },\n        \"visits\": []\n    }",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/pets/:petId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"pets",
+								":petId"
+							],
+							"variable": [
+								{
+									"key": "petId",
+									"value": "{{mostRecentlyAddedPetId}}",
+									"description": "(Required) petId"
+								}
+							]
+						},
+						"description": "Given I am on the update pet request\nWhen I want to update the last added pet's details\nThen The pet will be updated on the pets list"
+					},
+					"response": [
 						{
 							"name": "Unauthorized",
 							"originalRequest": {
-								"method": "POST",
+								"method": "PUT",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/pets",
+									"raw": "{{baseUrl}}/pets/:petId",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
-										"pets"
+										"pets",
+										":petId"
+									],
+									"variable": [
+										{
+											"key": "petId"
+										}
 									]
 								}
 							},
@@ -1698,17 +1859,56 @@
 							"body": ""
 						},
 						{
-							"name": "Forbidden",
+							"name": "OK",
 							"originalRequest": {
-								"method": "POST",
+								"method": "PUT",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/pets",
+									"raw": "{{baseUrl}}/pets/:petId",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
-										"pets"
+										"pets",
+										":petId"
+									],
+									"variable": [
+										{
+											"key": "petId"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "*/*"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Forbidden",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/pets/:petId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"pets",
+										":petId"
+									],
+									"variable": [
+										{
+											"key": "petId"
+										}
 									]
 								}
 							},
@@ -1723,50 +1923,7 @@
 							],
 							"cookie": [],
 							"body": ""
-						}
-					]
-				},
-				{
-					"name": "updatePet",
-					"request": {
-						"auth": {
-							"type": "noauth"
 						},
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"birthDate\": \"<dateTime>\",\n    \"id\": \"<integer>\",\n    \"name\": \"<string>\",\n    \"owner\": {\n        \"address\": \"<string>\",\n        \"city\": \"<string>\",\n        \"firstName\": \"<string>\",\n        \"id\": \"<integer>\",\n        \"lastName\": \"<string>\",\n        \"pets\": [\n            {\n                \"birthDate\": \"<dateTime>\",\n                \"id\": \"<integer>\",\n                \"name\": \"<string>\",\n                \"owner\": {\n                    \"value\": \"<Circular reference to #/components/schemas/Owner detected>\"\n                },\n                \"type\": {\n                    \"id\": \"<integer>\",\n                    \"name\": \"<string>\"\n                },\n                \"visits\": [\n                    {\n                        \"date\": \"<string>\",\n                        \"description\": \"<string>\",\n                        \"id\": \"<integer>\",\n                        \"pet\": {\n                            \"value\": \"<Circular reference to #/components/schemas/Pet detected>\"\n                        }\n                    },\n                    {\n                        \"date\": \"<string>\",\n                        \"description\": \"<string>\",\n                        \"id\": \"<integer>\",\n                        \"pet\": {\n                            \"value\": \"<Circular reference to #/components/schemas/Pet detected>\"\n                        }\n                    }\n                ]\n            },\n            {\n                \"birthDate\": \"<dateTime>\",\n                \"id\": \"<integer>\",\n                \"name\": \"<string>\",\n                \"owner\": {\n                    \"value\": \"<Circular reference to #/components/schemas/Owner detected>\"\n                },\n                \"type\": {\n                    \"id\": \"<integer>\",\n                    \"name\": \"<string>\"\n                },\n                \"visits\": [\n                    {\n                        \"date\": \"<string>\",\n                        \"description\": \"<string>\",\n                        \"id\": \"<integer>\",\n                        \"pet\": {\n                            \"value\": \"<Circular reference to #/components/schemas/Pet detected>\"\n                        }\n                    },\n                    {\n                        \"date\": \"<string>\",\n                        \"description\": \"<string>\",\n                        \"id\": \"<integer>\",\n                        \"pet\": {\n                            \"value\": \"<Circular reference to #/components/schemas/Pet detected>\"\n                        }\n                    }\n                ]\n            }\n        ],\n        \"telephone\": \"<string>\"\n    },\n    \"type\": {\n        \"id\": \"<integer>\",\n        \"name\": \"<string>\"\n    },\n    \"visits\": [\n        {\n            \"date\": \"<string>\",\n            \"description\": \"<string>\",\n            \"id\": \"<integer>\",\n            \"pet\": {\n                \"value\": \"<Circular reference to #/components/schemas/Pet detected>\"\n            }\n        },\n        {\n            \"date\": \"<string>\",\n            \"description\": \"<string>\",\n            \"id\": \"<integer>\",\n            \"pet\": {\n                \"value\": \"<Circular reference to #/components/schemas/Pet detected>\"\n            }\n        }\n    ]\n}",
-							"options": {
-								"raw": {}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}/pets/:petId",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"pets",
-								":petId"
-							],
-							"variable": [
-								{
-									"id": "82524051-04b4-469f-94ef-d377b706eeca",
-									"key": "petId",
-									"value": "<integer>",
-									"type": "string",
-									"description": "(Required) petId"
-								}
-							]
-						}
-					},
-					"response": [
 						{
 							"name": "Created",
 							"originalRequest": {
@@ -1832,77 +1989,60 @@
 							],
 							"cookie": [],
 							"body": ""
-						},
+						}
+					]
+				},
+				{
+					"name": "Delete most recent pet",
+					"event": [
 						{
-							"name": "OK",
-							"originalRequest": {
-								"method": "PUT",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/pets/:petId",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"pets",
-										":petId"
-									],
-									"variable": [
-										{
-											"key": "petId"
-										}
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "*/*"
-								}
-							],
-							"cookie": [],
-							"body": ""
+							"listen": "test",
+							"script": {
+								"id": "e63300d5-f868-4b84-893f-1d5d59d2a35c",
+								"exec": [
+									"pm.test(\"Delete most recent pet\", function () {",
+									"    pm.response.to.have.status(204); // deleted",
+									"    postman.setEnvironmentVariable(\"totalPets\", parseInt(environment.totalPets) - 1);",
+									"    ",
+									"    ",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
 						},
-						{
-							"name": "Unauthorized",
-							"originalRequest": {
-								"method": "PUT",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/pets/:petId",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"pets",
-										":petId"
-									],
-									"variable": [
-										{
-											"key": "petId"
-										}
-									]
-								}
-							},
-							"status": "Unauthorized",
-							"code": 401,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "text/plain"
-								}
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/pets/:petId",
+							"host": [
+								"{{baseUrl}}"
 							],
-							"cookie": [],
-							"body": ""
+							"path": [
+								"pets",
+								":petId"
+							],
+							"variable": [
+								{
+									"key": "petId",
+									"value": "{{mostRecentlyAddedPetId}}",
+									"description": "(Required) petId"
+								}
+							]
 						},
+						"description": "Given I am on the delete most recent pet request\nWhen I want to delete the most recent added pet\nThen The pet will be removed from the pets list"
+					},
+					"response": [
 						{
 							"name": "Forbidden",
 							"originalRequest": {
-								"method": "PUT",
+								"method": "DELETE",
 								"header": [],
 								"url": {
 									"raw": "{{baseUrl}}/pets/:petId",
@@ -1931,38 +2071,7 @@
 							],
 							"cookie": [],
 							"body": ""
-						}
-					]
-				},
-				{
-					"name": "deletePet",
-					"request": {
-						"auth": {
-							"type": "noauth"
 						},
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/pets/:petId",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"pets",
-								":petId"
-							],
-							"variable": [
-								{
-									"id": "d6602ade-6b07-46d9-97db-04b0f6d4e609",
-									"key": "petId",
-									"value": "<integer>",
-									"type": "string",
-									"description": "(Required) petId"
-								}
-							]
-						}
-					},
-					"response": [
 						{
 							"name": "OK",
 							"originalRequest": {
@@ -1986,6 +2095,39 @@
 							},
 							"status": "OK",
 							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Unauthorized",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/pets/:petId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"pets",
+										":petId"
+									],
+									"variable": [
+										{
+											"key": "petId"
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
 							"_postman_previewlanguage": "text",
 							"header": [
 								{
@@ -2028,74 +2170,43 @@
 							],
 							"cookie": [],
 							"body": ""
-						},
-						{
-							"name": "Unauthorized",
-							"originalRequest": {
-								"method": "DELETE",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/pets/:petId",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"pets",
-										":petId"
-									],
-									"variable": [
-										{
-											"key": "petId"
-										}
-									]
-								}
-							},
-							"status": "Unauthorized",
-							"code": 401,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "text/plain"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						},
-						{
-							"name": "Forbidden",
-							"originalRequest": {
-								"method": "DELETE",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/pets/:petId",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"pets",
-										":petId"
-									],
-									"variable": [
-										{
-											"key": "petId"
-										}
-									]
-								}
-							},
-							"status": "Forbidden",
-							"code": 403,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "text/plain"
-								}
-							],
-							"cookie": [],
-							"body": ""
 						}
 					]
+				}
+			],
+			"description": "As an employee\nI want to add, remove, retrieve and update pets\nSo than I can maintain our pet list",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "220d9393-0d04-48ea-8880-8df45ecc6157",
+						"type": "text/javascript",
+						"exec": [
+							"var url = pm.variables.get('baseUrl') + '/pets';",
+							"    ",
+							"pm.sendRequest(url, function (err, res) {",
+							"    if (err) {",
+							"        console.log(err);",
+							"    } else {",
+							"        var json = res.json();",
+							"        postman.setEnvironmentVariable(\"totalPets\", json.length);    ",
+							"        postman.setEnvironmentVariable(\"mostRecentlyAddedPetId\", json[json.length - 1].id);",
+							"    }",
+							"});",
+							"",
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "b0687880-6044-4495-974e-0387dc04480e",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
 				}
 			],
 			"protocolProfileBehavior": {}
@@ -2104,13 +2215,40 @@
 			"name": "vets",
 			"item": [
 				{
-					"name": "getAllVets",
+					"name": "Successfully  retrieve all vets",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "204e5e79-656c-4382-bfa6-7b550712acf7",
+								"exec": [
+									"pm.test(\"Successfully retrieve all pets\", function () {",
+									"    pm.response.to.have.status(200); ",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"auth": {
 							"type": "noauth"
 						},
 						"method": "GET",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n  {\n    \"firstName\": \"string\",\n    \"id\": 0,\n    \"lastName\": \"string\",\n    \"specialties\": [\n      {\n        \"id\": 0,\n        \"name\": \"string\"\n      }\n    ]\n  }\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
 							"raw": "{{baseUrl}}/vets",
 							"host": [
@@ -2119,21 +2257,235 @@
 							"path": [
 								"vets"
 							]
-						}
+						},
+						"description": "Given I am on retrieve all vets request\nWhen I want to retrieve list of vets\nThen I will have a list of all the vets details"
 					},
 					"response": [
+						{
+							"name": "Forbidden",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/pets",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"pets"
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/pets",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"pets"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "*/*"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/pets",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"pets"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
 						{
 							"name": "Unauthorized",
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/vets",
+									"raw": "{{baseUrl}}/pets",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
-										"vets"
+										"pets"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Confirm vets quantity",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3390e08b-c824-4e38-97d5-57c960617934",
+								"exec": [
+									"pm.test(\"Expect \" + environment.totalOwners + \" vets\", function () {",
+									"    var json = pm.response.json();",
+									"    pm.expect(json.length).to.eql(parseInt(environment.totalVets));",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/vets",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"vets"
+							]
+						},
+						"description": "Given that there are x vets\nAnd I am on the confirm vets quantity request\nWhen I want to get the full vets list\nThen I expect that list to have x vets in it"
+					},
+					"response": [
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/owners",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"owners"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Forbidden",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/owners",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"owners"
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Unauthorized",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/owners",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"owners"
 									]
 								}
 							},
@@ -2155,12 +2507,12 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/vets",
+									"raw": "{{baseUrl}}/owners",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
-										"vets"
+										"owners"
 									]
 								}
 							},
@@ -2175,65 +2527,29 @@
 							],
 							"cookie": [],
 							"body": ""
-						},
-						{
-							"name": "Forbidden",
-							"originalRequest": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/vets",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"vets"
-									]
-								}
-							},
-							"status": "Forbidden",
-							"code": 403,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "text/plain"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						},
-						{
-							"name": "Not Found",
-							"originalRequest": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/vets",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"vets"
-									]
-								}
-							},
-							"status": "Not Found",
-							"code": 404,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "text/plain"
-								}
-							],
-							"cookie": [],
-							"body": ""
 						}
 					]
 				},
 				{
-					"name": "addVet",
+					"name": "Successfully add vet",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "14cd0302-fadf-4d22-a866-1ae78a33ff0e",
+								"exec": [
+									"pm.test(\"Successfully add vet\", function () {",
+									"    pm.response.to.have.status(201); // created",
+									"    postman.setEnvironmentVariable(\"totalVets\", parseInt(environment.totalVets) + 1);",
+									"     postman.setEnvironmentVariable(\"mostRecentlyAddedVetId\", pm.response.json().id)",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "noauth"
@@ -2247,7 +2563,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"firstName\": \"<string>\",\n    \"id\": \"<integer>\",\n    \"lastName\": \"<string>\",\n    \"specialties\": [\n        {\n            \"id\": \"<integer>\",\n            \"name\": \"<string>\"\n        },\n        {\n            \"id\": \"<integer>\",\n            \"name\": \"<string>\"\n        }\n    ]\n}",
+							"raw": "{\n    \"firstName\": \"Nabil\",\n    \"lastName\": \"Almusallm\",\n    \"specialties\": [\n    \t {\n                \"id\": 1,\n                \"name\": \"radiology\"\n            }\n    \t]\n   \n}",
 							"options": {
 								"raw": {}
 							}
@@ -2260,9 +2576,37 @@
 							"path": [
 								"vets"
 							]
-						}
+						},
+						"description": "Given that I am on the add vets request\nWhen I want to add a vet\nThen I expect the vet to be added to the vets list"
 					},
 					"response": [
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/vets",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"vets"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "*/*"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
 						{
 							"name": "Not Found",
 							"originalRequest": {
@@ -2280,6 +2624,60 @@
 							},
 							"status": "Not Found",
 							"code": 404,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Forbidden",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/vets",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"vets"
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Unauthorized",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/vets",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"vets"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
 							"_postman_previewlanguage": "text",
 							"header": [
 								{
@@ -2316,255 +2714,44 @@
 							],
 							"cookie": [],
 							"body": ""
-						},
-						{
-							"name": "Unauthorized",
-							"originalRequest": {
-								"method": "POST",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/vets",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"vets"
-									]
-								}
-							},
-							"status": "Unauthorized",
-							"code": 401,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "text/plain"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						},
-						{
-							"name": "OK",
-							"originalRequest": {
-								"method": "POST",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/vets",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"vets"
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "*/*"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						},
-						{
-							"name": "Forbidden",
-							"originalRequest": {
-								"method": "POST",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/vets",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"vets"
-									]
-								}
-							},
-							"status": "Forbidden",
-							"code": 403,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "text/plain"
-								}
-							],
-							"cookie": [],
-							"body": ""
 						}
 					]
 				},
 				{
-					"name": "getVet",
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/vets/:vetId",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"vets",
-								":vetId"
-							],
-							"variable": [
-								{
-									"id": "32fd5729-1c4a-4f7b-8833-c398e3a9be16",
-									"key": "vetId",
-									"value": "<integer>",
-									"type": "string",
-									"description": "(Required) vetId"
-								}
-							]
+					"name": "Successfully update vet",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1dc2c4b5-7f43-44f1-aa40-98f6ef12e9d6",
+								"exec": [
+									"pm.test(\"Update vet's name\", function () {",
+									"    pm.response.to.have.status(204); // No content",
+									"    var url = pm.variables.get('baseUrl') + '/vets';",
+									"    ",
+									"    pm.sendRequest(url, function (err, res) {",
+									"        if (err) {",
+									"            console.log(err);",
+									"            pm.fail();",
+									"        } else {",
+									"            var json = res.json();",
+									"            var firstName = json[json.length - 1].firstName;",
+									"            var lastName = json[json.length - 1].lastName;",
+									"",
+									"            pm.expect(firstName).to.eql('Nabil');",
+									"            pm.expect(lastName).to.eql('Abdulrahman');",
+									"",
+									"        }",
+									"    });",
+									"    ",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
 						}
-					},
-					"response": [
-						{
-							"name": "Forbidden",
-							"originalRequest": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/vets/:vetId",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"vets",
-										":vetId"
-									],
-									"variable": [
-										{
-											"key": "vetId"
-										}
-									]
-								}
-							},
-							"status": "Forbidden",
-							"code": 403,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "text/plain"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						},
-						{
-							"name": "Not Found",
-							"originalRequest": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/vets/:vetId",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"vets",
-										":vetId"
-									],
-									"variable": [
-										{
-											"key": "vetId"
-										}
-									]
-								}
-							},
-							"status": "Not Found",
-							"code": 404,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "text/plain"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						},
-						{
-							"name": "OK",
-							"originalRequest": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/vets/:vetId",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"vets",
-										":vetId"
-									],
-									"variable": [
-										{
-											"key": "vetId"
-										}
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "*/*"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						},
-						{
-							"name": "Unauthorized",
-							"originalRequest": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/vets/:vetId",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"vets",
-										":vetId"
-									],
-									"variable": [
-										{
-											"key": "vetId"
-										}
-									]
-								}
-							},
-							"status": "Unauthorized",
-							"code": 401,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "text/plain"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						}
-					]
-				},
-				{
-					"name": "updateVet",
+					],
 					"request": {
 						"auth": {
 							"type": "noauth"
@@ -2578,7 +2765,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"firstName\": \"<string>\",\n    \"id\": \"<integer>\",\n    \"lastName\": \"<string>\",\n    \"specialties\": [\n        {\n            \"id\": \"<integer>\",\n            \"name\": \"<string>\"\n        },\n        {\n            \"id\": \"<integer>\",\n            \"name\": \"<string>\"\n        }\n    ]\n}",
+							"raw": "{\n    \"firstName\": \"Nabil\",\n    \"lastName\": \"Abdulrahman\"\n  \n}",
 							"options": {
 								"raw": {}
 							}
@@ -2594,18 +2781,17 @@
 							],
 							"variable": [
 								{
-									"id": "4a9f4cb2-88ea-4a96-8a97-3645559ad26d",
 									"key": "vetId",
-									"value": "<integer>",
-									"type": "string",
+									"value": "{{mostRecentlyAddedVetId}}",
 									"description": "(Required) vetId"
 								}
 							]
-						}
+						},
+						"description": "Given I am on the update vet request\nWhen I want to update the last added vet's details\nThen The vet will be updated on the vets list"
 					},
 					"response": [
 						{
-							"name": "Created",
+							"name": "Not Found",
 							"originalRequest": {
 								"method": "PUT",
 								"header": [],
@@ -2625,8 +2811,41 @@
 									]
 								}
 							},
-							"status": "Created",
-							"code": 201,
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Unauthorized",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/vets/:vetId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"vets",
+										":vetId"
+									],
+									"variable": [
+										{
+											"key": "vetId"
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
 							"_postman_previewlanguage": "text",
 							"header": [
 								{
@@ -2704,7 +2923,7 @@
 							"body": ""
 						},
 						{
-							"name": "Unauthorized",
+							"name": "Created",
 							"originalRequest": {
 								"method": "PUT",
 								"header": [],
@@ -2724,41 +2943,8 @@
 									]
 								}
 							},
-							"status": "Unauthorized",
-							"code": 401,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "text/plain"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						},
-						{
-							"name": "Not Found",
-							"originalRequest": {
-								"method": "PUT",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/vets/:vetId",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"vets",
-										":vetId"
-									],
-									"variable": [
-										{
-											"key": "vetId"
-										}
-									]
-								}
-							},
-							"status": "Not Found",
-							"code": 404,
+							"status": "Created",
+							"code": 201,
 							"_postman_previewlanguage": "text",
 							"header": [
 								{
@@ -2772,7 +2958,26 @@
 					]
 				},
 				{
-					"name": "deleteVet",
+					"name": "Delete most recent vet",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e969f8c8-7ed1-46f7-9763-469ec1d7bf27",
+								"exec": [
+									"pm.test(\"Delete most recent vet\", function () {",
+									"    pm.response.to.have.status(204); // deleted",
+									"    postman.setEnvironmentVariable(\"totalVets\", parseInt(environment.totalVets) - 1);",
+									"    ",
+									"    ",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "noauth"
@@ -2790,49 +2995,15 @@
 							],
 							"variable": [
 								{
-									"id": "09719d1d-094b-4ab0-bd57-15e4c9d284ac",
 									"key": "vetId",
-									"value": "<integer>",
-									"type": "string",
+									"value": "{{mostRecentlyAddedVetId}}",
 									"description": "(Required) vetId"
 								}
 							]
-						}
+						},
+						"description": "Given I am on the delete most recent vet request\nWhen I want to delete the most recent added vet\nThen The vet will be removed from the vets list"
 					},
 					"response": [
-						{
-							"name": "OK",
-							"originalRequest": {
-								"method": "DELETE",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/vets/:vetId",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"vets",
-										":vetId"
-									],
-									"variable": [
-										{
-											"key": "vetId"
-										}
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "text/plain"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						},
 						{
 							"name": "Unauthorized",
 							"originalRequest": {
@@ -2931,8 +3102,76 @@
 							],
 							"cookie": [],
 							"body": ""
+						},
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/vets/:vetId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"vets",
+										":vetId"
+									],
+									"variable": [
+										{
+											"key": "vetId"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
 						}
 					]
+				}
+			],
+			"description": "As an employee\nI want to add, remove, retrieve and update vets\nSo than I can maintain our vets list",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "7e2032d4-8d1a-4cf6-963c-88776d6502ab",
+						"type": "text/javascript",
+						"exec": [
+							"var url = pm.variables.get('baseUrl') + '/vets';",
+							"    ",
+							"pm.sendRequest(url, function (err, res) {",
+							"    if (err) {",
+							"        console.log(err);",
+							"    } else {",
+							"        var json = res.json();",
+							"        postman.setEnvironmentVariable(\"totalVets\", json.length);    ",
+							"        postman.setEnvironmentVariable(\"mostRecentlyAddedVetId\", json[json.length - 1].id);",
+							"    }",
+							"});",
+							"",
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "a4097d6c-f5a3-455b-a38d-0fbe1723625e",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
 				}
 			],
 			"protocolProfileBehavior": {}
@@ -2941,7 +3180,24 @@
 			"name": "visits",
 			"item": [
 				{
-					"name": "getAllVisits",
+					"name": "Confirm visits quantity",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "deb0cf1e-e97f-40c7-bde2-5caf117c7c9f",
+								"exec": [
+									"pm.test(\"Expect \" + environment.totalVisits + \"visits\", function () {",
+									"    var json = pm.response.json();",
+									"    pm.expect(json.length).to.eql(parseInt(environment.totalVisits));",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "noauth"
@@ -2960,6 +3216,33 @@
 					},
 					"response": [
 						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/visits",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"visits"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "*/*"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
 							"name": "Not Found",
 							"originalRequest": {
 								"method": "GET",
@@ -2976,33 +3259,6 @@
 							},
 							"status": "Not Found",
 							"code": 404,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "text/plain"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						},
-						{
-							"name": "Forbidden",
-							"originalRequest": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/visits",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"visits"
-									]
-								}
-							},
-							"status": "Forbidden",
-							"code": 403,
 							"_postman_previewlanguage": "text",
 							"header": [
 								{
@@ -3041,123 +3297,9 @@
 							"body": ""
 						},
 						{
-							"name": "OK",
-							"originalRequest": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/visits",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"visits"
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "*/*"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						}
-					]
-				},
-				{
-					"name": "addVisit",
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"date\": \"<string>\",\n    \"description\": \"<string>\",\n    \"id\": \"<integer>\",\n    \"pet\": {\n        \"birthDate\": \"<dateTime>\",\n        \"id\": \"<integer>\",\n        \"name\": \"<string>\",\n        \"owner\": {\n            \"value\": \"<Circular reference to #/components/schemas/Owner detected>\"\n        },\n        \"type\": {\n            \"id\": \"<integer>\",\n            \"name\": \"<string>\"\n        },\n        \"visits\": [\n            {\n                \"date\": \"<string>\",\n                \"description\": \"<string>\",\n                \"id\": \"<integer>\",\n                \"pet\": {\n                    \"value\": \"<Circular reference to #/components/schemas/Pet detected>\"\n                }\n            },\n            {\n                \"date\": \"<string>\",\n                \"description\": \"<string>\",\n                \"id\": \"<integer>\",\n                \"pet\": {\n                    \"value\": \"<Circular reference to #/components/schemas/Pet detected>\"\n                }\n            }\n        ]\n    }\n}",
-							"options": {
-								"raw": {}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}/visits",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"visits"
-							]
-						}
-					},
-					"response": [
-						{
-							"name": "Created",
-							"originalRequest": {
-								"method": "POST",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/visits",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"visits"
-									]
-								}
-							},
-							"status": "Created",
-							"code": 201,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "text/plain"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						},
-						{
-							"name": "Unauthorized",
-							"originalRequest": {
-								"method": "POST",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/visits",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"visits"
-									]
-								}
-							},
-							"status": "Unauthorized",
-							"code": 401,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "text/plain"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						},
-						{
 							"name": "Forbidden",
 							"originalRequest": {
-								"method": "POST",
+								"method": "GET",
 								"header": [],
 								"url": {
 									"raw": "{{baseUrl}}/visits",
@@ -3176,60 +3318,6 @@
 								{
 									"key": "Content-Type",
 									"value": "text/plain"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						},
-						{
-							"name": "Not Found",
-							"originalRequest": {
-								"method": "POST",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/visits",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"visits"
-									]
-								}
-							},
-							"status": "Not Found",
-							"code": 404,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "text/plain"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						},
-						{
-							"name": "OK",
-							"originalRequest": {
-								"method": "POST",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/visits",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"visits"
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "*/*"
 								}
 							],
 							"cookie": [],
@@ -3256,10 +3344,8 @@
 							],
 							"variable": [
 								{
-									"id": "1d9c47d1-66df-4509-9dec-7e0b5ec800b6",
 									"key": "visitId",
 									"value": "<integer>",
-									"type": "string",
 									"description": "(Required) visitId"
 								}
 							]
@@ -3267,7 +3353,7 @@
 					},
 					"response": [
 						{
-							"name": "Forbidden",
+							"name": "Unauthorized",
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
@@ -3287,8 +3373,8 @@
 									]
 								}
 							},
-							"status": "Forbidden",
-							"code": 403,
+							"status": "Unauthorized",
+							"code": 401,
 							"_postman_previewlanguage": "text",
 							"header": [
 								{
@@ -3366,7 +3452,7 @@
 							"body": ""
 						},
 						{
-							"name": "Unauthorized",
+							"name": "Forbidden",
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
@@ -3386,6 +3472,97 @@
 									]
 								}
 							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Confirm visits quantity",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "478079c1-5ce3-48a1-976c-b8d042ee028e",
+								"exec": [
+									"pm.test(\"Expect \" + environment.totalVets + \" vets\", function () {",
+									"    var json = pm.response.json();",
+									"    pm.expect(json.length).to.eql(parseInt(environment.totalVets));",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/vets",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"vets"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/vets",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"vets"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Unauthorized",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/vets",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"vets"
+									]
+								}
+							},
 							"status": "Unauthorized",
 							"code": 401,
 							"_postman_previewlanguage": "text",
@@ -3393,6 +3570,60 @@
 								{
 									"key": "Content-Type",
 									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Forbidden",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/vets",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"vets"
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/vets",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"vets"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "*/*"
 								}
 							],
 							"cookie": [],
@@ -3431,10 +3662,8 @@
 							],
 							"variable": [
 								{
-									"id": "a7e5a51c-cdda-49dd-838f-e0aeec48636e",
 									"key": "visitId",
 									"value": "<integer>",
-									"type": "string",
 									"description": "(Required) visitId"
 								}
 							]
@@ -3475,7 +3704,7 @@
 							"body": ""
 						},
 						{
-							"name": "Not Found",
+							"name": "Forbidden",
 							"originalRequest": {
 								"method": "PUT",
 								"header": [],
@@ -3495,8 +3724,8 @@
 									]
 								}
 							},
-							"status": "Not Found",
-							"code": 404,
+							"status": "Forbidden",
+							"code": 403,
 							"_postman_previewlanguage": "text",
 							"header": [
 								{
@@ -3574,7 +3803,7 @@
 							"body": ""
 						},
 						{
-							"name": "Forbidden",
+							"name": "Not Found",
 							"originalRequest": {
 								"method": "PUT",
 								"header": [],
@@ -3594,8 +3823,8 @@
 									]
 								}
 							},
-							"status": "Forbidden",
-							"code": 403,
+							"status": "Not Found",
+							"code": 404,
 							"_postman_previewlanguage": "text",
 							"header": [
 								{
@@ -3627,10 +3856,8 @@
 							],
 							"variable": [
 								{
-									"id": "0f691551-bd42-4d0c-b7a1-db6c744a54f0",
 									"key": "visitId",
 									"value": "<integer>",
-									"type": "string",
 									"description": "(Required) visitId"
 								}
 							]
@@ -3660,39 +3887,6 @@
 							},
 							"status": "OK",
 							"code": 200,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "text/plain"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						},
-						{
-							"name": "Unauthorized",
-							"originalRequest": {
-								"method": "DELETE",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/visits/:visitId",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"visits",
-										":visitId"
-									],
-									"variable": [
-										{
-											"key": "visitId"
-										}
-									]
-								}
-							},
-							"status": "Unauthorized",
-							"code": 401,
 							"_postman_previewlanguage": "text",
 							"header": [
 								{
@@ -3737,6 +3931,39 @@
 							"body": ""
 						},
 						{
+							"name": "Unauthorized",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/visits/:visitId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"visits",
+										":visitId"
+									],
+									"variable": [
+										{
+											"key": "visitId"
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
 							"name": "Forbidden",
 							"originalRequest": {
 								"method": "DELETE",
@@ -3772,554 +3999,61 @@
 					]
 				}
 			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "645f24ff-d4f9-4650-8a39-47787d362ffd",
+						"type": "text/javascript",
+						"exec": [
+							"var url = pm.variables.get('baseUrl') + '/visits';",
+							"    ",
+							"pm.sendRequest(url, function (err, res) {",
+							"    if (err) {",
+							"        console.log(err);",
+							"    } else {",
+							"        var json = res.json();",
+							"        postman.setEnvironmentVariable(\"totalVisits\", json.length);    ",
+							"        postman.setEnvironmentVariable(\"mostRecentlyAddedVisitsId\", json[json.length - 1].id);",
+							"    }",
+							"});",
+							"",
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "c9ac2da3-5b28-4faf-8ecf-eec764f7f57d",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
 			"protocolProfileBehavior": {}
 		},
 		{
 			"name": "pettypes",
 			"item": [
 				{
-					"name": "{pet Type Id}",
-					"item": [
+					"name": "Successfully  retrieve all pet types",
+					"event": [
 						{
-							"name": "getPetType",
-							"request": {
-								"auth": {
-									"type": "noauth"
-								},
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/pettypes/:petTypeId",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"pettypes",
-										":petTypeId"
-									],
-									"variable": [
-										{
-											"id": "d9352464-484e-4727-b2a9-0a8c1e270335",
-											"key": "petTypeId",
-											"value": "<integer>",
-											"type": "string",
-											"description": "(Required) petTypeId"
-										}
-									]
-								}
-							},
-							"response": [
-								{
-									"name": "Unauthorized",
-									"originalRequest": {
-										"method": "GET",
-										"header": [],
-										"url": {
-											"raw": "{{baseUrl}}/pettypes/:petTypeId",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"pettypes",
-												":petTypeId"
-											],
-											"variable": [
-												{
-													"key": "petTypeId"
-												}
-											]
-										}
-									},
-									"status": "Unauthorized",
-									"code": 401,
-									"_postman_previewlanguage": "text",
-									"header": [
-										{
-											"key": "Content-Type",
-											"value": "text/plain"
-										}
-									],
-									"cookie": [],
-									"body": ""
-								},
-								{
-									"name": "OK",
-									"originalRequest": {
-										"method": "GET",
-										"header": [],
-										"url": {
-											"raw": "{{baseUrl}}/pettypes/:petTypeId",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"pettypes",
-												":petTypeId"
-											],
-											"variable": [
-												{
-													"key": "petTypeId"
-												}
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "text",
-									"header": [
-										{
-											"key": "Content-Type",
-											"value": "*/*"
-										}
-									],
-									"cookie": [],
-									"body": ""
-								},
-								{
-									"name": "Not Found",
-									"originalRequest": {
-										"method": "GET",
-										"header": [],
-										"url": {
-											"raw": "{{baseUrl}}/pettypes/:petTypeId",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"pettypes",
-												":petTypeId"
-											],
-											"variable": [
-												{
-													"key": "petTypeId"
-												}
-											]
-										}
-									},
-									"status": "Not Found",
-									"code": 404,
-									"_postman_previewlanguage": "text",
-									"header": [
-										{
-											"key": "Content-Type",
-											"value": "text/plain"
-										}
-									],
-									"cookie": [],
-									"body": ""
-								},
-								{
-									"name": "Forbidden",
-									"originalRequest": {
-										"method": "GET",
-										"header": [],
-										"url": {
-											"raw": "{{baseUrl}}/pettypes/:petTypeId",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"pettypes",
-												":petTypeId"
-											],
-											"variable": [
-												{
-													"key": "petTypeId"
-												}
-											]
-										}
-									},
-									"status": "Forbidden",
-									"code": 403,
-									"_postman_previewlanguage": "text",
-									"header": [
-										{
-											"key": "Content-Type",
-											"value": "text/plain"
-										}
-									],
-									"cookie": [],
-									"body": ""
-								}
-							]
-						},
-						{
-							"name": "updatePetType",
-							"request": {
-								"auth": {
-									"type": "noauth"
-								},
-								"method": "PUT",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
+							"listen": "test",
+							"script": {
+								"id": "6bebcad2-5a92-4b13-9b29-e00dbffedf0b",
+								"exec": [
+									"pm.test(\"Successfully retrieve all pet types\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
 								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"id\": \"<integer>\",\n    \"name\": \"<string>\"\n}",
-									"options": {
-										"raw": {}
-									}
-								},
-								"url": {
-									"raw": "{{baseUrl}}/pettypes/:petTypeId",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"pettypes",
-										":petTypeId"
-									],
-									"variable": [
-										{
-											"id": "98d34a45-a816-4ff7-8cef-6c99be4436f2",
-											"key": "petTypeId",
-											"value": "<integer>",
-											"type": "string",
-											"description": "(Required) petTypeId"
-										}
-									]
-								}
-							},
-							"response": [
-								{
-									"name": "Created",
-									"originalRequest": {
-										"method": "PUT",
-										"header": [],
-										"url": {
-											"raw": "{{baseUrl}}/pettypes/:petTypeId",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"pettypes",
-												":petTypeId"
-											],
-											"variable": [
-												{
-													"key": "petTypeId"
-												}
-											]
-										}
-									},
-									"status": "Created",
-									"code": 201,
-									"_postman_previewlanguage": "text",
-									"header": [
-										{
-											"key": "Content-Type",
-											"value": "text/plain"
-										}
-									],
-									"cookie": [],
-									"body": ""
-								},
-								{
-									"name": "OK",
-									"originalRequest": {
-										"method": "PUT",
-										"header": [],
-										"url": {
-											"raw": "{{baseUrl}}/pettypes/:petTypeId",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"pettypes",
-												":petTypeId"
-											],
-											"variable": [
-												{
-													"key": "petTypeId"
-												}
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "text",
-									"header": [
-										{
-											"key": "Content-Type",
-											"value": "*/*"
-										}
-									],
-									"cookie": [],
-									"body": ""
-								},
-								{
-									"name": "Forbidden",
-									"originalRequest": {
-										"method": "PUT",
-										"header": [],
-										"url": {
-											"raw": "{{baseUrl}}/pettypes/:petTypeId",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"pettypes",
-												":petTypeId"
-											],
-											"variable": [
-												{
-													"key": "petTypeId"
-												}
-											]
-										}
-									},
-									"status": "Forbidden",
-									"code": 403,
-									"_postman_previewlanguage": "text",
-									"header": [
-										{
-											"key": "Content-Type",
-											"value": "text/plain"
-										}
-									],
-									"cookie": [],
-									"body": ""
-								},
-								{
-									"name": "Unauthorized",
-									"originalRequest": {
-										"method": "PUT",
-										"header": [],
-										"url": {
-											"raw": "{{baseUrl}}/pettypes/:petTypeId",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"pettypes",
-												":petTypeId"
-											],
-											"variable": [
-												{
-													"key": "petTypeId"
-												}
-											]
-										}
-									},
-									"status": "Unauthorized",
-									"code": 401,
-									"_postman_previewlanguage": "text",
-									"header": [
-										{
-											"key": "Content-Type",
-											"value": "text/plain"
-										}
-									],
-									"cookie": [],
-									"body": ""
-								},
-								{
-									"name": "Not Found",
-									"originalRequest": {
-										"method": "PUT",
-										"header": [],
-										"url": {
-											"raw": "{{baseUrl}}/pettypes/:petTypeId",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"pettypes",
-												":petTypeId"
-											],
-											"variable": [
-												{
-													"key": "petTypeId"
-												}
-											]
-										}
-									},
-									"status": "Not Found",
-									"code": 404,
-									"_postman_previewlanguage": "text",
-									"header": [
-										{
-											"key": "Content-Type",
-											"value": "text/plain"
-										}
-									],
-									"cookie": [],
-									"body": ""
-								}
-							]
-						},
-						{
-							"name": "deletePetType",
-							"request": {
-								"auth": {
-									"type": "noauth"
-								},
-								"method": "DELETE",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/pettypes/:petTypeId",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"pettypes",
-										":petTypeId"
-									],
-									"variable": [
-										{
-											"id": "c2bd2a2c-c963-485f-8233-96edcc558a8d",
-											"key": "petTypeId",
-											"value": "<integer>",
-											"type": "string",
-											"description": "(Required) petTypeId"
-										}
-									]
-								}
-							},
-							"response": [
-								{
-									"name": "Unauthorized",
-									"originalRequest": {
-										"method": "DELETE",
-										"header": [],
-										"url": {
-											"raw": "{{baseUrl}}/pettypes/:petTypeId",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"pettypes",
-												":petTypeId"
-											],
-											"variable": [
-												{
-													"key": "petTypeId"
-												}
-											]
-										}
-									},
-									"status": "Unauthorized",
-									"code": 401,
-									"_postman_previewlanguage": "text",
-									"header": [
-										{
-											"key": "Content-Type",
-											"value": "text/plain"
-										}
-									],
-									"cookie": [],
-									"body": ""
-								},
-								{
-									"name": "Forbidden",
-									"originalRequest": {
-										"method": "DELETE",
-										"header": [],
-										"url": {
-											"raw": "{{baseUrl}}/pettypes/:petTypeId",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"pettypes",
-												":petTypeId"
-											],
-											"variable": [
-												{
-													"key": "petTypeId"
-												}
-											]
-										}
-									},
-									"status": "Forbidden",
-									"code": 403,
-									"_postman_previewlanguage": "text",
-									"header": [
-										{
-											"key": "Content-Type",
-											"value": "text/plain"
-										}
-									],
-									"cookie": [],
-									"body": ""
-								},
-								{
-									"name": "OK",
-									"originalRequest": {
-										"method": "DELETE",
-										"header": [],
-										"url": {
-											"raw": "{{baseUrl}}/pettypes/:petTypeId",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"pettypes",
-												":petTypeId"
-											],
-											"variable": [
-												{
-													"key": "petTypeId"
-												}
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "text",
-									"header": [
-										{
-											"key": "Content-Type",
-											"value": "text/plain"
-										}
-									],
-									"cookie": [],
-									"body": ""
-								},
-								{
-									"name": "No Content",
-									"originalRequest": {
-										"method": "DELETE",
-										"header": [],
-										"url": {
-											"raw": "{{baseUrl}}/pettypes/:petTypeId",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"pettypes",
-												":petTypeId"
-											],
-											"variable": [
-												{
-													"key": "petTypeId"
-												}
-											]
-										}
-									},
-									"status": "No Content",
-									"code": 204,
-									"_postman_previewlanguage": "text",
-									"header": [
-										{
-											"key": "Content-Type",
-											"value": "text/plain"
-										}
-									],
-									"cookie": [],
-									"body": ""
-								}
-							]
+								"type": "text/javascript"
+							}
 						}
 					],
-					"protocolProfileBehavior": {},
-					"_postman_isSubFolder": true
-				},
-				{
-					"name": "getAllPetTypes",
 					"request": {
 						"auth": {
 							"type": "noauth"
@@ -4334,9 +4068,37 @@
 							"path": [
 								"pettypes"
 							]
-						}
+						},
+						"description": "Given I am on retrieve all pet types request\nWhen I want to retrieve list of all pet types \nThen I will have a list of all the pet types details"
 					},
 					"response": [
+						{
+							"name": "Unauthorized",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/pettypes",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"pettypes"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
 						{
 							"name": "Forbidden",
 							"originalRequest": {
@@ -4408,33 +4170,6 @@
 							},
 							"status": "Not Found",
 							"code": 404,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "text/plain"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						},
-						{
-							"name": "Unauthorized",
-							"originalRequest": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/pettypes",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"pettypes"
-									]
-								}
-							},
-							"status": "Unauthorized",
-							"code": 401,
 							"_postman_previewlanguage": "text",
 							"header": [
 								{
@@ -4448,7 +4183,25 @@
 					]
 				},
 				{
-					"name": "addPetType",
+					"name": "Successfully add pet type",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "dd017b0b-dd77-4d88-bfec-cf52cde7db86",
+								"exec": [
+									"pm.test(\"Successfully add pet type\", function () {",
+									"    pm.response.to.have.status(201); // created",
+									"    postman.setEnvironmentVariable(\"totalPetTypes\", parseInt(environment.totalOwners) + 1);",
+									"     postman.setEnvironmentVariable(\"mostRecentlyAddedPetTypeId\", pm.response.json().id)",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "noauth"
@@ -4462,7 +4215,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"id\": \"<integer>\",\n    \"name\": \"<string>\"\n}",
+							"raw": "{\n    \"name\": \"Hippo\"\n}",
 							"options": {
 								"raw": {}
 							}
@@ -4475,36 +4228,10 @@
 							"path": [
 								"pettypes"
 							]
-						}
+						},
+						"description": "Given that I am on the add pet type request\nWhen I want to add a new pet type\nThen I expect the new pet type to be added to the pet types list"
 					},
 					"response": [
-						{
-							"name": "Not Found",
-							"originalRequest": {
-								"method": "POST",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/pettypes",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"pettypes"
-									]
-								}
-							},
-							"status": "Not Found",
-							"code": 404,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "text/plain"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						},
 						{
 							"name": "OK",
 							"originalRequest": {
@@ -4527,6 +4254,33 @@
 								{
 									"key": "Content-Type",
 									"value": "*/*"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Forbidden",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/pettypes",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"pettypes"
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
 								}
 							],
 							"cookie": [],
@@ -4560,7 +4314,7 @@
 							"body": ""
 						},
 						{
-							"name": "Forbidden",
+							"name": "Not Found",
 							"originalRequest": {
 								"method": "POST",
 								"header": [],
@@ -4574,8 +4328,8 @@
 									]
 								}
 							},
-							"status": "Forbidden",
-							"code": 403,
+							"status": "Not Found",
+							"code": 404,
 							"_postman_previewlanguage": "text",
 							"header": [
 								{
@@ -4614,13 +4368,429 @@
 							"body": ""
 						}
 					]
+				},
+				{
+					"name": "Successfully update pet type",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c3b8654c-7654-4e1a-bf7b-0a8eecdaf548",
+								"exec": [
+									"pm.test(\"Update pet's name\", function () {",
+									"    pm.response.to.have.status(204); // No content",
+									"    var url = pm.variables.get('baseUrl') + '/pettypes';",
+									"    ",
+									"    pm.sendRequest(url, function (err, res) {",
+									"        if (err) {",
+									"            console.log(err);",
+									"            pm.fail();",
+									"        } else {",
+									"            var json = res.json();",
+									"            var name = json[json.length - 1].name;",
+									"            pm.expect(name).to.eql('Jellyfish');",
+									"        }",
+									"    });",
+									"    ",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n     \"id\": 102,\n     \"name\": \"Jellyfish\"\n}",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/pettypes/:petTypeId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"pettypes",
+								":petTypeId"
+							],
+							"variable": [
+								{
+									"key": "petTypeId",
+									"value": "{{mostRecentlyAddedPetTypeId}}",
+									"description": "(Required) petTypeId"
+								}
+							]
+						},
+						"description": "Given I am on the update pet type request\nWhen I want to update the last added pet type\nThen The pet type will be updated on the pet types list"
+					},
+					"response": [
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/pettypes/:petTypeId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"pettypes",
+										":petTypeId"
+									],
+									"variable": [
+										{
+											"key": "petTypeId"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/pettypes/:petTypeId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"pettypes",
+										":petTypeId"
+									],
+									"variable": [
+										{
+											"key": "petTypeId"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "*/*"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Unauthorized",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/pettypes/:petTypeId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"pettypes",
+										":petTypeId"
+									],
+									"variable": [
+										{
+											"key": "petTypeId"
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Forbidden",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/pettypes/:petTypeId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"pettypes",
+										":petTypeId"
+									],
+									"variable": [
+										{
+											"key": "petTypeId"
+										}
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Created",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/pettypes/:petTypeId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"pettypes",
+										":petTypeId"
+									],
+									"variable": [
+										{
+											"key": "petTypeId"
+										}
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Delete most recent pet type",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1688ba88-bb3b-416a-a939-0789dfcecb91",
+								"exec": [
+									"pm.test(\"Delete most recent pet type\", function () {",
+									"    pm.response.to.have.status(204); // deleted",
+									"    postman.setEnvironmentVariable(\"totalPetTypes\", parseInt(environment.totalPetTypes) - 1);",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/pettypes/:petTypeId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"pettypes",
+								":petTypeId"
+							],
+							"variable": [
+								{
+									"key": "petTypeId",
+									"value": "{{mostRecentlyAddedPetTypeId}}",
+									"description": "(Required) petTypeId"
+								}
+							]
+						},
+						"description": "Given I am on the delete most recent pet type request\nWhen I want to delete the most recent added pet type\nThen The pet type will be removed from the pet types list"
+					},
+					"response": [
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/pettypes/:petTypeId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"pettypes",
+										":petTypeId"
+									],
+									"variable": [
+										{
+											"key": "petTypeId"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "No Content",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/pettypes/:petTypeId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"pettypes",
+										":petTypeId"
+									],
+									"variable": [
+										{
+											"key": "petTypeId"
+										}
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Forbidden",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/pettypes/:petTypeId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"pettypes",
+										":petTypeId"
+									],
+									"variable": [
+										{
+											"key": "petTypeId"
+										}
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Unauthorized",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/pettypes/:petTypeId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"pettypes",
+										":petTypeId"
+									],
+									"variable": [
+										{
+											"key": "petTypeId"
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
 				}
 			],
+			"description": "As an employee\nI want to add, remove, retrieve and update pet types\nSo than I can maintain our pet types list",
 			"event": [
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "86d31e7c-02d9-4570-8e2b-a5bd1b624abc",
+						"id": "0f88039b-67b2-4e7f-948d-012a8437f71e",
 						"type": "text/javascript",
 						"exec": [
 							"var url = pm.variables.get('baseUrl') + '/pettypes';",
@@ -4641,7 +4811,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "4ea18b88-2b47-41a8-a471-150c23b1ba8f",
+						"id": "48b356f3-ef9d-410f-9e7e-bd9d022cc326",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -4655,548 +4825,21 @@
 			"name": "specialties",
 			"item": [
 				{
-					"name": "{specialty Id}",
-					"item": [
+					"name": "Successfully retrieve all vet specialties",
+					"event": [
 						{
-							"name": "getSpecialty",
-							"request": {
-								"auth": {
-									"type": "noauth"
-								},
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/specialties/:specialtyId",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"specialties",
-										":specialtyId"
-									],
-									"variable": [
-										{
-											"id": "331364b9-45a9-4d83-b9d2-8771ca78a1e9",
-											"key": "specialtyId",
-											"value": "<integer>",
-											"type": "string",
-											"description": "(Required) specialtyId"
-										}
-									]
-								}
-							},
-							"response": [
-								{
-									"name": "Forbidden",
-									"originalRequest": {
-										"method": "GET",
-										"header": [],
-										"url": {
-											"raw": "{{baseUrl}}/specialties/:specialtyId",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"specialties",
-												":specialtyId"
-											],
-											"variable": [
-												{
-													"key": "specialtyId"
-												}
-											]
-										}
-									},
-									"status": "Forbidden",
-									"code": 403,
-									"_postman_previewlanguage": "text",
-									"header": [
-										{
-											"key": "Content-Type",
-											"value": "text/plain"
-										}
-									],
-									"cookie": [],
-									"body": ""
-								},
-								{
-									"name": "OK",
-									"originalRequest": {
-										"method": "GET",
-										"header": [],
-										"url": {
-											"raw": "{{baseUrl}}/specialties/:specialtyId",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"specialties",
-												":specialtyId"
-											],
-											"variable": [
-												{
-													"key": "specialtyId"
-												}
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "text",
-									"header": [
-										{
-											"key": "Content-Type",
-											"value": "*/*"
-										}
-									],
-									"cookie": [],
-									"body": ""
-								},
-								{
-									"name": "Not Found",
-									"originalRequest": {
-										"method": "GET",
-										"header": [],
-										"url": {
-											"raw": "{{baseUrl}}/specialties/:specialtyId",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"specialties",
-												":specialtyId"
-											],
-											"variable": [
-												{
-													"key": "specialtyId"
-												}
-											]
-										}
-									},
-									"status": "Not Found",
-									"code": 404,
-									"_postman_previewlanguage": "text",
-									"header": [
-										{
-											"key": "Content-Type",
-											"value": "text/plain"
-										}
-									],
-									"cookie": [],
-									"body": ""
-								},
-								{
-									"name": "Unauthorized",
-									"originalRequest": {
-										"method": "GET",
-										"header": [],
-										"url": {
-											"raw": "{{baseUrl}}/specialties/:specialtyId",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"specialties",
-												":specialtyId"
-											],
-											"variable": [
-												{
-													"key": "specialtyId"
-												}
-											]
-										}
-									},
-									"status": "Unauthorized",
-									"code": 401,
-									"_postman_previewlanguage": "text",
-									"header": [
-										{
-											"key": "Content-Type",
-											"value": "text/plain"
-										}
-									],
-									"cookie": [],
-									"body": ""
-								}
-							]
-						},
-						{
-							"name": "updateSpecialty",
-							"request": {
-								"auth": {
-									"type": "noauth"
-								},
-								"method": "PUT",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
+							"listen": "test",
+							"script": {
+								"id": "2da57561-9211-4d71-8131-05c569c4756d",
+								"exec": [
+									"pm.test(\"Successfully retrieve all vet specialties\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
 								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"id\": \"<integer>\",\n    \"name\": \"<string>\"\n}",
-									"options": {
-										"raw": {}
-									}
-								},
-								"url": {
-									"raw": "{{baseUrl}}/specialties/:specialtyId",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"specialties",
-										":specialtyId"
-									],
-									"variable": [
-										{
-											"id": "e7205eb9-7513-46c6-99e7-9af5720809e7",
-											"key": "specialtyId",
-											"value": "<integer>",
-											"type": "string",
-											"description": "(Required) specialtyId"
-										}
-									]
-								}
-							},
-							"response": [
-								{
-									"name": "Unauthorized",
-									"originalRequest": {
-										"method": "PUT",
-										"header": [],
-										"url": {
-											"raw": "{{baseUrl}}/specialties/:specialtyId",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"specialties",
-												":specialtyId"
-											],
-											"variable": [
-												{
-													"key": "specialtyId"
-												}
-											]
-										}
-									},
-									"status": "Unauthorized",
-									"code": 401,
-									"_postman_previewlanguage": "text",
-									"header": [
-										{
-											"key": "Content-Type",
-											"value": "text/plain"
-										}
-									],
-									"cookie": [],
-									"body": ""
-								},
-								{
-									"name": "Forbidden",
-									"originalRequest": {
-										"method": "PUT",
-										"header": [],
-										"url": {
-											"raw": "{{baseUrl}}/specialties/:specialtyId",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"specialties",
-												":specialtyId"
-											],
-											"variable": [
-												{
-													"key": "specialtyId"
-												}
-											]
-										}
-									},
-									"status": "Forbidden",
-									"code": 403,
-									"_postman_previewlanguage": "text",
-									"header": [
-										{
-											"key": "Content-Type",
-											"value": "text/plain"
-										}
-									],
-									"cookie": [],
-									"body": ""
-								},
-								{
-									"name": "OK",
-									"originalRequest": {
-										"method": "PUT",
-										"header": [],
-										"url": {
-											"raw": "{{baseUrl}}/specialties/:specialtyId",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"specialties",
-												":specialtyId"
-											],
-											"variable": [
-												{
-													"key": "specialtyId"
-												}
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "text",
-									"header": [
-										{
-											"key": "Content-Type",
-											"value": "*/*"
-										}
-									],
-									"cookie": [],
-									"body": ""
-								},
-								{
-									"name": "Not Found",
-									"originalRequest": {
-										"method": "PUT",
-										"header": [],
-										"url": {
-											"raw": "{{baseUrl}}/specialties/:specialtyId",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"specialties",
-												":specialtyId"
-											],
-											"variable": [
-												{
-													"key": "specialtyId"
-												}
-											]
-										}
-									},
-									"status": "Not Found",
-									"code": 404,
-									"_postman_previewlanguage": "text",
-									"header": [
-										{
-											"key": "Content-Type",
-											"value": "text/plain"
-										}
-									],
-									"cookie": [],
-									"body": ""
-								},
-								{
-									"name": "Created",
-									"originalRequest": {
-										"method": "PUT",
-										"header": [],
-										"url": {
-											"raw": "{{baseUrl}}/specialties/:specialtyId",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"specialties",
-												":specialtyId"
-											],
-											"variable": [
-												{
-													"key": "specialtyId"
-												}
-											]
-										}
-									},
-									"status": "Created",
-									"code": 201,
-									"_postman_previewlanguage": "text",
-									"header": [
-										{
-											"key": "Content-Type",
-											"value": "text/plain"
-										}
-									],
-									"cookie": [],
-									"body": ""
-								}
-							]
-						},
-						{
-							"name": "deleteSpecialty",
-							"request": {
-								"auth": {
-									"type": "noauth"
-								},
-								"method": "DELETE",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/specialties/:specialtyId",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"specialties",
-										":specialtyId"
-									],
-									"variable": [
-										{
-											"id": "7ed99f1e-50a7-48a7-9e2f-c4648c1018a1",
-											"key": "specialtyId",
-											"value": "<integer>",
-											"type": "string",
-											"description": "(Required) specialtyId"
-										}
-									]
-								}
-							},
-							"response": [
-								{
-									"name": "No Content",
-									"originalRequest": {
-										"method": "DELETE",
-										"header": [],
-										"url": {
-											"raw": "{{baseUrl}}/specialties/:specialtyId",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"specialties",
-												":specialtyId"
-											],
-											"variable": [
-												{
-													"key": "specialtyId"
-												}
-											]
-										}
-									},
-									"status": "No Content",
-									"code": 204,
-									"_postman_previewlanguage": "text",
-									"header": [
-										{
-											"key": "Content-Type",
-											"value": "text/plain"
-										}
-									],
-									"cookie": [],
-									"body": ""
-								},
-								{
-									"name": "Unauthorized",
-									"originalRequest": {
-										"method": "DELETE",
-										"header": [],
-										"url": {
-											"raw": "{{baseUrl}}/specialties/:specialtyId",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"specialties",
-												":specialtyId"
-											],
-											"variable": [
-												{
-													"key": "specialtyId"
-												}
-											]
-										}
-									},
-									"status": "Unauthorized",
-									"code": 401,
-									"_postman_previewlanguage": "text",
-									"header": [
-										{
-											"key": "Content-Type",
-											"value": "text/plain"
-										}
-									],
-									"cookie": [],
-									"body": ""
-								},
-								{
-									"name": "OK",
-									"originalRequest": {
-										"method": "DELETE",
-										"header": [],
-										"url": {
-											"raw": "{{baseUrl}}/specialties/:specialtyId",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"specialties",
-												":specialtyId"
-											],
-											"variable": [
-												{
-													"key": "specialtyId"
-												}
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "text",
-									"header": [
-										{
-											"key": "Content-Type",
-											"value": "text/plain"
-										}
-									],
-									"cookie": [],
-									"body": ""
-								},
-								{
-									"name": "Forbidden",
-									"originalRequest": {
-										"method": "DELETE",
-										"header": [],
-										"url": {
-											"raw": "{{baseUrl}}/specialties/:specialtyId",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"specialties",
-												":specialtyId"
-											],
-											"variable": [
-												{
-													"key": "specialtyId"
-												}
-											]
-										}
-									},
-									"status": "Forbidden",
-									"code": 403,
-									"_postman_previewlanguage": "text",
-									"header": [
-										{
-											"key": "Content-Type",
-											"value": "text/plain"
-										}
-									],
-									"cookie": [],
-									"body": ""
-								}
-							]
+								"type": "text/javascript"
+							}
 						}
 					],
-					"protocolProfileBehavior": {},
-					"_postman_isSubFolder": true
-				},
-				{
-					"name": "getAllSpecialtys",
 					"request": {
 						"auth": {
 							"type": "noauth"
@@ -5211,7 +4854,8 @@
 							"path": [
 								"specialties"
 							]
-						}
+						},
+						"description": "Given I am on retrieve all specialties request\nWhen I want to retrieve list of vet specialties\nThen I will have a list of all the vet specialties details"
 					},
 					"response": [
 						{
@@ -5231,33 +4875,6 @@
 							},
 							"status": "Not Found",
 							"code": 404,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "text/plain"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						},
-						{
-							"name": "Unauthorized",
-							"originalRequest": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/specialties",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"specialties"
-									]
-								}
-							},
-							"status": "Unauthorized",
-							"code": 401,
 							"_postman_previewlanguage": "text",
 							"header": [
 								{
@@ -5312,6 +4929,33 @@
 							},
 							"status": "Forbidden",
 							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Unauthorized",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/specialties",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"specialties"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
 							"_postman_previewlanguage": "text",
 							"header": [
 								{
@@ -5325,7 +4969,25 @@
 					]
 				},
 				{
-					"name": "addSpecialty",
+					"name": "Successfully add vet specialty",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "13ab4055-f720-4c76-b886-aafbe5fb9b40",
+								"exec": [
+									"pm.test(\"Successfully add vet specialty\", function () {",
+									"    pm.response.to.have.status(201); // created",
+									"    postman.setEnvironmentVariable(\"totalVetSpecialties\", parseInt(environment.totalVetSpecialties) + 1);",
+									"     postman.setEnvironmentVariable(\"mostRecentlyAddedSpecialtyId\", pm.response.json().id)",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "noauth"
@@ -5339,7 +5001,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"id\": \"<integer>\",\n    \"name\": \"<string>\"\n}",
+							"raw": "{\n    \"name\": \"Dermatology\"\n}",
 							"options": {
 								"raw": {}
 							}
@@ -5352,36 +5014,10 @@
 							"path": [
 								"specialties"
 							]
-						}
+						},
+						"description": "Given that I am on the add vet specialty request\nWhen I want to add a new vet specialty\nThen I expect the new specialty to be added to the vet specialties list"
 					},
 					"response": [
-						{
-							"name": "Forbidden",
-							"originalRequest": {
-								"method": "POST",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/specialties",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"specialties"
-									]
-								}
-							},
-							"status": "Forbidden",
-							"code": 403,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "text/plain"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						},
 						{
 							"name": "OK",
 							"originalRequest": {
@@ -5404,60 +5040,6 @@
 								{
 									"key": "Content-Type",
 									"value": "*/*"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						},
-						{
-							"name": "Not Found",
-							"originalRequest": {
-								"method": "POST",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/specialties",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"specialties"
-									]
-								}
-							},
-							"status": "Not Found",
-							"code": 404,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "text/plain"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						},
-						{
-							"name": "Unauthorized",
-							"originalRequest": {
-								"method": "POST",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/specialties",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"specialties"
-									]
-								}
-							},
-							"status": "Unauthorized",
-							"code": 401,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "text/plain"
 								}
 							],
 							"cookie": [],
@@ -5489,8 +5071,538 @@
 							],
 							"cookie": [],
 							"body": ""
+						},
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/specialties",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"specialties"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Forbidden",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/specialties",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"specialties"
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Unauthorized",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/specialties",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"specialties"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
 						}
 					]
+				},
+				{
+					"name": "Successfully update vet specialty",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8f70423a-b601-436f-8eef-533761f42f04",
+								"exec": [
+									"pm.test(\"Update vet specialty name\", function () {",
+									"    pm.response.to.have.status(204); // No content",
+									"    var url = pm.variables.get('baseUrl') + '/specialties';",
+									"    ",
+									"    pm.sendRequest(url, function (err, res) {",
+									"        if (err) {",
+									"            console.log(err);",
+									"            pm.fail();",
+									"        } else {",
+									"            var json = res.json();",
+									"            var name = json[json.length - 1].name;",
+									"            pm.expect(name).to.eql('Dentistry');",
+									"        }",
+									"    });",
+									"    ",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 103,\n    \"name\": \"Dentistry\"\n}",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/specialties/:specialtyId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"specialties",
+								":specialtyId"
+							],
+							"variable": [
+								{
+									"description": "(Required) specialtyId",
+									"key": "specialtyId",
+									"value": "{{mostRecentlyAddedSpecialtyId}}"
+								}
+							]
+						},
+						"description": "Given I am on the update vet specialty request\nWhen I want to update the last added vet's specialty\nThen The vet's specialty will be updated "
+					},
+					"response": [
+						{
+							"name": "Unauthorized",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/specialties/:specialtyId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"specialties",
+										":specialtyId"
+									],
+									"variable": [
+										{
+											"key": "specialtyId"
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Forbidden",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/specialties/:specialtyId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"specialties",
+										":specialtyId"
+									],
+									"variable": [
+										{
+											"key": "specialtyId"
+										}
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Created",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/specialties/:specialtyId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"specialties",
+										":specialtyId"
+									],
+									"variable": [
+										{
+											"key": "specialtyId"
+										}
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/specialties/:specialtyId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"specialties",
+										":specialtyId"
+									],
+									"variable": [
+										{
+											"key": "specialtyId"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "*/*"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/specialties/:specialtyId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"specialties",
+										":specialtyId"
+									],
+									"variable": [
+										{
+											"key": "specialtyId"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Delete most recent vet specialty",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "801d4d4e-5a19-477a-9c58-f3f7010c3f54",
+								"exec": [
+									"pm.test(\"Delete most recent vet specialty\", function () {",
+									"    pm.response.to.have.status(204); // deleted",
+									"    postman.setEnvironmentVariable(\"totalVetSpecialties\", parseInt(environment.totalVetSpecialties) - 1);",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/specialties/:specialtyId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"specialties",
+								":specialtyId"
+							],
+							"variable": [
+								{
+									"key": "specialtyId",
+									"value": "{{mostRecentlyAddedSpecialtyId}}",
+									"description": "(Required) specialtyId"
+								}
+							]
+						},
+						"description": "Given I am on the delete most recent vet specialty request\nWhen I want to delete the most recent added vet specialty\nThen The vet specialty will be removed from the vet specialties list"
+					},
+					"response": [
+						{
+							"name": "No Content",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/specialties/:specialtyId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"specialties",
+										":specialtyId"
+									],
+									"variable": [
+										{
+											"key": "specialtyId"
+										}
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Unauthorized",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/specialties/:specialtyId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"specialties",
+										":specialtyId"
+									],
+									"variable": [
+										{
+											"key": "specialtyId"
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/specialties/:specialtyId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"specialties",
+										":specialtyId"
+									],
+									"variable": [
+										{
+											"key": "specialtyId"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Forbidden",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/specialties/:specialtyId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"specialties",
+										":specialtyId"
+									],
+									"variable": [
+										{
+											"key": "specialtyId"
+										}
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				}
+			],
+			"description": "As an employee\nI want to add, remove, retrieve and update vet specialties\nSo than I can maintain our vet specialties list",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "e18f0eb7-9a9e-4eef-bbfd-dccb86e76b9c",
+						"type": "text/javascript",
+						"exec": [
+							"var url = pm.variables.get('baseUrl') + '/specialties';",
+							"    ",
+							"pm.sendRequest(url, function (err, res) {",
+							"    if (err) {",
+							"        console.log(err);",
+							"        pm.fail();",
+							"    } else {",
+							"        var json = res.json();",
+							"        pm.variables.set(\"totalVetSpecialties\", json.length);    ",
+							"        pm.variables.set(\"mostRecentlyAddedspecialtyId\", json[json.length - 1].id);",
+							"    }",
+							"});"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "fe257fb9-dc02-4815-9c48-346dfa54c231",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
 				}
 			],
 			"protocolProfileBehavior": {}
