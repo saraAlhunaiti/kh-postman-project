@@ -53,7 +53,7 @@
 								"owners"
 							]
 						},
-						"description": "Given I am on retrieve all owners request\nWhen I want to retrieve list of owners\nThen I will have a list of all the owners details"
+						"description": "Given I am on retrieve all visits request\nWhen I want to retrieve list of visits\nThen I will have a list of all visits details"
 					},
 					"response": [
 						{
@@ -362,12 +362,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/pet/*/lastname/:lastName",
+							"raw": "{{baseUrl}}/owners/*/lastname/:lastName",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
-								"pet",
+								"owners",
 								"*",
 								"lastname",
 								":lastName"
@@ -1581,7 +1581,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "63027a2a-c888-4ad3-a61e-3949f0faf30a",
+								"id": "d3559809-69eb-4a56-9801-54aebf8350ae",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -1617,11 +1617,12 @@
 							"path": [
 								"pets"
 							]
-						}
+						},
+						"description": "Given that I am on the add pet request\nWhen I want to add a new pet\nThen I expect the new pet to be added to the pets list"
 					},
 					"response": [
 						{
-							"name": "Not Found",
+							"name": "OK",
 							"originalRequest": {
 								"method": "POST",
 								"header": [],
@@ -1635,13 +1636,13 @@
 									]
 								}
 							},
-							"status": "Not Found",
-							"code": 404,
+							"status": "OK",
+							"code": 200,
 							"_postman_previewlanguage": "text",
 							"header": [
 								{
 									"key": "Content-Type",
-									"value": "text/plain"
+									"value": "*/*"
 								}
 							],
 							"cookie": [],
@@ -1675,60 +1676,6 @@
 							"body": ""
 						},
 						{
-							"name": "Unauthorized",
-							"originalRequest": {
-								"method": "POST",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/pets",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"pets"
-									]
-								}
-							},
-							"status": "Unauthorized",
-							"code": 401,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "text/plain"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						},
-						{
-							"name": "OK",
-							"originalRequest": {
-								"method": "POST",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/pets",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"pets"
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "*/*"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						},
-						{
 							"name": "Created",
 							"originalRequest": {
 								"method": "POST",
@@ -1745,6 +1692,60 @@
 							},
 							"status": "Created",
 							"code": 201,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/pets",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"pets"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Unauthorized",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/pets",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"pets"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
 							"_postman_previewlanguage": "text",
 							"header": [
 								{
@@ -2174,7 +2175,7 @@
 					]
 				}
 			],
-			"description": "As an employee\nI want to add, remove, retrieve and update pets\nSo than I can maintain our pet list",
+			"description": "As an employee\nI want to add, remove, retrieve and update pets\nSo than I can maintain our pets list\n ",
 			"event": [
 				{
 					"listen": "prerequest",
@@ -2202,6 +2203,749 @@
 					"listen": "test",
 					"script": {
 						"id": "b0687880-6044-4495-974e-0387dc04480e",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "visits",
+			"item": [
+				{
+					"name": "Confirm visits quantity",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "bff770a0-b875-496a-ba57-575d00fee394",
+								"exec": [
+									"pm.test(\"Expect \" + environment.totalVisits + \"visits\", function () {",
+									"    var json = pm.response.json();",
+									"    pm.expect(json.length).to.eql(parseInt(environment.totalVisits));",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/visits",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"visits"
+							]
+						},
+						"description": "Given that there are x visits\nAnd I am on the confirm visits quantity request\nWhen I want to get the full visits list\nThen I expect that list to have x visits in it"
+					},
+					"response": [
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/visits",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"visits"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Unauthorized",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/visits",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"visits"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/visits",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"visits"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "*/*"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Forbidden",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/visits",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"visits"
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Successfully retrieve all visits",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/visits/:visitId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"visits",
+								":visitId"
+							],
+							"variable": [
+								{
+									"key": "visitId",
+									"value": "<integer>",
+									"description": "(Required) visitId"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Forbidden",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/visits/:visitId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"visits",
+										":visitId"
+									],
+									"variable": [
+										{
+											"key": "visitId"
+										}
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/visits/:visitId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"visits",
+										":visitId"
+									],
+									"variable": [
+										{
+											"key": "visitId"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/visits/:visitId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"visits",
+										":visitId"
+									],
+									"variable": [
+										{
+											"key": "visitId"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "*/*"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Unauthorized",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/visits/:visitId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"visits",
+										":visitId"
+									],
+									"variable": [
+										{
+											"key": "visitId"
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Successfully add visit",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "16a05b7e-d350-430a-a785-b6ab58753ebe",
+								"exec": [
+									"pm.test(\"Successfully add visits\", function () {",
+									"    pm.response.to.have.status(201); // created",
+									"    postman.setEnvironmentVariable(\"totalVisits\", parseInt(environment.totalOwners) + 1);",
+									"    postman.setEnvironmentVariable(\"mostRecentlyAddedVisitId\", pm.response.json().id)",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n\n\t{\n  \"date\": \"2020/06/02\",\n  \"description\": \"Almost Dead 'COVID_19 is here' !!!!!!\",\n    \"pet\":{\n        \"id\": 2,\n        \"name\": \"Basil\",\n        \"birthDate\": \"2002/08/06\",\n        \"type\": {\n            \"id\": 6,\n            \"name\": \"hamster\"\n        },\n        \"owner\": {\n            \"id\": 2,\n            \"firstName\": \"Betty\",\n            \"lastName\": \"Davis\",\n            \"address\": \"638 Cardinal Ave.\",\n            \"city\": \"Sun Prairie\",\n            \"telephone\": \"6085551749\"\n        }\n        }\n\t}\n\t]",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/owners",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"owners"
+							]
+						},
+						"description": "Given that I am on the add visit request\nWhen I want to add a new vet visit\nThen I expect the visit to be added to the owner's pet details"
+					},
+					"response": [
+						{
+							"name": "Forbidden",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/owners",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"owners"
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Created",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/owners",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"owners"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/owners",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"owners"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/owners",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"owners"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "*/*"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Unauthorized",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/owners",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"owners"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Successfully update visit",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"date\": \"<string>\",\n    \"description\": \"<string>\",\n    \"id\": \"<integer>\",\n    \"pet\": {\n        \"birthDate\": \"<dateTime>\",\n        \"id\": \"<integer>\",\n        \"name\": \"<string>\",\n        \"owner\": {\n            \"value\": \"<Circular reference to #/components/schemas/Owner detected>\"\n        },\n        \"type\": {\n            \"id\": \"<integer>\",\n            \"name\": \"<string>\"\n        },\n        \"visits\": [\n            {\n                \"date\": \"<string>\",\n                \"description\": \"<string>\",\n                \"id\": \"<integer>\",\n                \"pet\": {\n                    \"value\": \"<Circular reference to #/components/schemas/Pet detected>\"\n                }\n            },\n            {\n                \"date\": \"<string>\",\n                \"description\": \"<string>\",\n                \"id\": \"<integer>\",\n                \"pet\": {\n                    \"value\": \"<Circular reference to #/components/schemas/Pet detected>\"\n                }\n            }\n        ]\n    }\n}",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/visits/:visitId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"visits",
+								":visitId"
+							],
+							"variable": [
+								{
+									"key": "visitId",
+									"value": "<integer>",
+									"description": "(Required) visitId"
+								}
+							]
+						},
+						"description": "Given I am on the update visit request\nWhen I want to update a vet visit details\nThen The visit will be updated on the owner's pet list"
+					},
+					"response": [
+						{
+							"name": "Unauthorized",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/visits/:visitId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"visits",
+										":visitId"
+									],
+									"variable": [
+										{
+											"key": "visitId"
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Created",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/visits/:visitId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"visits",
+										":visitId"
+									],
+									"variable": [
+										{
+											"key": "visitId"
+										}
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Forbidden",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/visits/:visitId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"visits",
+										":visitId"
+									],
+									"variable": [
+										{
+											"key": "visitId"
+										}
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/visits/:visitId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"visits",
+										":visitId"
+									],
+									"variable": [
+										{
+											"key": "visitId"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "*/*"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/visits/:visitId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"visits",
+										":visitId"
+									],
+									"variable": [
+										{
+											"key": "visitId"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				}
+			],
+			"description": "As an employee\nI want to add, remove, retrieve and update visits\nSo than I can maintain our owner's pet visits  ",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "a2567391-5da5-4607-b66e-8706dde93408",
+						"type": "text/javascript",
+						"exec": [
+							"var url = pm.variables.get('baseUrl') + '/visits';",
+							"    ",
+							"pm.sendRequest(url, function (err, res) {",
+							"    if (err) {",
+							"        console.log(err);",
+							"    } else {",
+							"        var json = res.json();",
+							"        postman.setEnvironmentVariable(\"totalVisits\", json.length);    ",
+							"        postman.setEnvironmentVariable(\"mostRecentlyAddedVisitsId\", json[json.length - 1].id);",
+							"    }",
+							"});",
+							"",
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "d413e25a-f36b-4810-a164-eccdd99ca6cd",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -3167,865 +3911,6 @@
 					"listen": "test",
 					"script": {
 						"id": "a4097d6c-f5a3-455b-a38d-0fbe1723625e",
-						"type": "text/javascript",
-						"exec": [
-							""
-						]
-					}
-				}
-			],
-			"protocolProfileBehavior": {}
-		},
-		{
-			"name": "visits",
-			"item": [
-				{
-					"name": "Confirm visits quantity",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "deb0cf1e-e97f-40c7-bde2-5caf117c7c9f",
-								"exec": [
-									"pm.test(\"Expect \" + environment.totalVisits + \"visits\", function () {",
-									"    var json = pm.response.json();",
-									"    pm.expect(json.length).to.eql(parseInt(environment.totalVisits));",
-									"});",
-									"",
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/visits",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"visits"
-							]
-						}
-					},
-					"response": [
-						{
-							"name": "OK",
-							"originalRequest": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/visits",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"visits"
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "*/*"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						},
-						{
-							"name": "Not Found",
-							"originalRequest": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/visits",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"visits"
-									]
-								}
-							},
-							"status": "Not Found",
-							"code": 404,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "text/plain"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						},
-						{
-							"name": "Unauthorized",
-							"originalRequest": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/visits",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"visits"
-									]
-								}
-							},
-							"status": "Unauthorized",
-							"code": 401,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "text/plain"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						},
-						{
-							"name": "Forbidden",
-							"originalRequest": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/visits",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"visits"
-									]
-								}
-							},
-							"status": "Forbidden",
-							"code": 403,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "text/plain"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						}
-					]
-				},
-				{
-					"name": "getVisit",
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/visits/:visitId",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"visits",
-								":visitId"
-							],
-							"variable": [
-								{
-									"key": "visitId",
-									"value": "<integer>",
-									"description": "(Required) visitId"
-								}
-							]
-						}
-					},
-					"response": [
-						{
-							"name": "Unauthorized",
-							"originalRequest": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/visits/:visitId",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"visits",
-										":visitId"
-									],
-									"variable": [
-										{
-											"key": "visitId"
-										}
-									]
-								}
-							},
-							"status": "Unauthorized",
-							"code": 401,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "text/plain"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						},
-						{
-							"name": "OK",
-							"originalRequest": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/visits/:visitId",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"visits",
-										":visitId"
-									],
-									"variable": [
-										{
-											"key": "visitId"
-										}
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "*/*"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						},
-						{
-							"name": "Not Found",
-							"originalRequest": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/visits/:visitId",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"visits",
-										":visitId"
-									],
-									"variable": [
-										{
-											"key": "visitId"
-										}
-									]
-								}
-							},
-							"status": "Not Found",
-							"code": 404,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "text/plain"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						},
-						{
-							"name": "Forbidden",
-							"originalRequest": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/visits/:visitId",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"visits",
-										":visitId"
-									],
-									"variable": [
-										{
-											"key": "visitId"
-										}
-									]
-								}
-							},
-							"status": "Forbidden",
-							"code": 403,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "text/plain"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						}
-					]
-				},
-				{
-					"name": "Confirm visits quantity",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "478079c1-5ce3-48a1-976c-b8d042ee028e",
-								"exec": [
-									"pm.test(\"Expect \" + environment.totalVets + \" vets\", function () {",
-									"    var json = pm.response.json();",
-									"    pm.expect(json.length).to.eql(parseInt(environment.totalVets));",
-									"});",
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/vets",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"vets"
-							]
-						}
-					},
-					"response": [
-						{
-							"name": "Not Found",
-							"originalRequest": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/vets",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"vets"
-									]
-								}
-							},
-							"status": "Not Found",
-							"code": 404,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "text/plain"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						},
-						{
-							"name": "Unauthorized",
-							"originalRequest": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/vets",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"vets"
-									]
-								}
-							},
-							"status": "Unauthorized",
-							"code": 401,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "text/plain"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						},
-						{
-							"name": "Forbidden",
-							"originalRequest": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/vets",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"vets"
-									]
-								}
-							},
-							"status": "Forbidden",
-							"code": 403,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "text/plain"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						},
-						{
-							"name": "OK",
-							"originalRequest": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/vets",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"vets"
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "*/*"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						}
-					]
-				},
-				{
-					"name": "updateVisit",
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"date\": \"<string>\",\n    \"description\": \"<string>\",\n    \"id\": \"<integer>\",\n    \"pet\": {\n        \"birthDate\": \"<dateTime>\",\n        \"id\": \"<integer>\",\n        \"name\": \"<string>\",\n        \"owner\": {\n            \"value\": \"<Circular reference to #/components/schemas/Owner detected>\"\n        },\n        \"type\": {\n            \"id\": \"<integer>\",\n            \"name\": \"<string>\"\n        },\n        \"visits\": [\n            {\n                \"date\": \"<string>\",\n                \"description\": \"<string>\",\n                \"id\": \"<integer>\",\n                \"pet\": {\n                    \"value\": \"<Circular reference to #/components/schemas/Pet detected>\"\n                }\n            },\n            {\n                \"date\": \"<string>\",\n                \"description\": \"<string>\",\n                \"id\": \"<integer>\",\n                \"pet\": {\n                    \"value\": \"<Circular reference to #/components/schemas/Pet detected>\"\n                }\n            }\n        ]\n    }\n}",
-							"options": {
-								"raw": {}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}/visits/:visitId",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"visits",
-								":visitId"
-							],
-							"variable": [
-								{
-									"key": "visitId",
-									"value": "<integer>",
-									"description": "(Required) visitId"
-								}
-							]
-						}
-					},
-					"response": [
-						{
-							"name": "Unauthorized",
-							"originalRequest": {
-								"method": "PUT",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/visits/:visitId",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"visits",
-										":visitId"
-									],
-									"variable": [
-										{
-											"key": "visitId"
-										}
-									]
-								}
-							},
-							"status": "Unauthorized",
-							"code": 401,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "text/plain"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						},
-						{
-							"name": "Forbidden",
-							"originalRequest": {
-								"method": "PUT",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/visits/:visitId",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"visits",
-										":visitId"
-									],
-									"variable": [
-										{
-											"key": "visitId"
-										}
-									]
-								}
-							},
-							"status": "Forbidden",
-							"code": 403,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "text/plain"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						},
-						{
-							"name": "Created",
-							"originalRequest": {
-								"method": "PUT",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/visits/:visitId",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"visits",
-										":visitId"
-									],
-									"variable": [
-										{
-											"key": "visitId"
-										}
-									]
-								}
-							},
-							"status": "Created",
-							"code": 201,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "text/plain"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						},
-						{
-							"name": "OK",
-							"originalRequest": {
-								"method": "PUT",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/visits/:visitId",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"visits",
-										":visitId"
-									],
-									"variable": [
-										{
-											"key": "visitId"
-										}
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "*/*"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						},
-						{
-							"name": "Not Found",
-							"originalRequest": {
-								"method": "PUT",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/visits/:visitId",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"visits",
-										":visitId"
-									],
-									"variable": [
-										{
-											"key": "visitId"
-										}
-									]
-								}
-							},
-							"status": "Not Found",
-							"code": 404,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "text/plain"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						}
-					]
-				},
-				{
-					"name": "deleteVisit",
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/visits/:visitId",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"visits",
-								":visitId"
-							],
-							"variable": [
-								{
-									"key": "visitId",
-									"value": "<integer>",
-									"description": "(Required) visitId"
-								}
-							]
-						}
-					},
-					"response": [
-						{
-							"name": "OK",
-							"originalRequest": {
-								"method": "DELETE",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/visits/:visitId",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"visits",
-										":visitId"
-									],
-									"variable": [
-										{
-											"key": "visitId"
-										}
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "text/plain"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						},
-						{
-							"name": "No Content",
-							"originalRequest": {
-								"method": "DELETE",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/visits/:visitId",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"visits",
-										":visitId"
-									],
-									"variable": [
-										{
-											"key": "visitId"
-										}
-									]
-								}
-							},
-							"status": "No Content",
-							"code": 204,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "text/plain"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						},
-						{
-							"name": "Unauthorized",
-							"originalRequest": {
-								"method": "DELETE",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/visits/:visitId",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"visits",
-										":visitId"
-									],
-									"variable": [
-										{
-											"key": "visitId"
-										}
-									]
-								}
-							},
-							"status": "Unauthorized",
-							"code": 401,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "text/plain"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						},
-						{
-							"name": "Forbidden",
-							"originalRequest": {
-								"method": "DELETE",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/visits/:visitId",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"visits",
-										":visitId"
-									],
-									"variable": [
-										{
-											"key": "visitId"
-										}
-									]
-								}
-							},
-							"status": "Forbidden",
-							"code": 403,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "text/plain"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						}
-					]
-				}
-			],
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"id": "645f24ff-d4f9-4650-8a39-47787d362ffd",
-						"type": "text/javascript",
-						"exec": [
-							"var url = pm.variables.get('baseUrl') + '/visits';",
-							"    ",
-							"pm.sendRequest(url, function (err, res) {",
-							"    if (err) {",
-							"        console.log(err);",
-							"    } else {",
-							"        var json = res.json();",
-							"        postman.setEnvironmentVariable(\"totalVisits\", json.length);    ",
-							"        postman.setEnvironmentVariable(\"mostRecentlyAddedVisitsId\", json[json.length - 1].id);",
-							"    }",
-							"});",
-							"",
-							""
-						]
-					}
-				},
-				{
-					"listen": "test",
-					"script": {
-						"id": "c9ac2da3-5b28-4faf-8ecf-eec764f7f57d",
 						"type": "text/javascript",
 						"exec": [
 							""
